@@ -1,0 +1,164 @@
+#今の所永橋先輩のやつ真似してテストしようとしてるだけ
+version: '3'
+services: #動作させるアプリケーション単位
+  ###-----テスト用のcompose記述-----###
+  #client-test: #ノードの名前。このコンテナに入りますよ。
+  #  build: 
+  #    #この中にあるdockerfileを使って作りますよ。
+  #    context: .
+  #    dockerfile: ./2nodetest/client-testnode/Dockerfile
+  #  image: client-testimage
+  #  # 以下はコンテナ起動後にpythonを実行するコマンド。
+  #  # command: python edgenode.py
+  #  # コンテナの名前を指定
+  #  container_name:  client-testnode
+  #  #コンソールで入れるようにする
+  #  stdin_open: true
+  #  tty: true
+  #  #ホストの中でのファイルが、docker内のここに反映される。
+  #  volumes:
+  #    - ./2nodetest/client-testnode:/root/opt/home/sekigawa/client-testnode
+  #  networks:
+  #    defaultnetwork:
+  #      ipv4_address: 10.0.0.2
+#
+  #producer-test: #ノードの名前。このコンテナに入りますよ。
+  #  build: 
+  #    #この中にあるdockerfileを使って作りますよ。
+  #    context: .
+  #    dockerfile: ./2nodetest/producer-testnode/Dockerfile
+  #  image: producer-testimage
+  #  # 以下はコンテナ起動後にpythonを実行するコマンド。
+  #  # command: python edgenode.py
+  #  # コンテナの名前を指定
+  #  container_name:  producer-testnode
+  #  #コンソールで入れるようにする
+  #  stdin_open: true
+  #  tty: true
+  #  #ホストの中でのファイルが、docker内のここに反映される。
+  #  volumes:
+  #    - ./2nodetest/producer-testnode:/root/opt/home/sekigawa/producer-testnode
+  #  #FIBの設定時IPアドレスを指定する必要があるため、固定IPを割り振る
+  #  networks:
+  #    defaultnetwork:
+  #      ipv4_address: 10.0.0.3
+  ###-----------------------------------###
+
+  ProducerNode: #ノードの名前。このコンテナに入りますよ。
+    build: 
+      #この中にあるdockerfileを使って作りますよ。
+      context: .
+      dockerfile: ./ProducerNode/Dockerfile
+    image: producer-image
+    # コンテナの名前を指定
+    container_name:  producer-container
+    #コンソールで入れるようにする
+    stdin_open: true
+    tty: true
+    #ホストの中でのファイルが、docker内のここに反映される。
+    volumes:
+      - ./ProducerNode:/root/opt/home/sekigawa/producer
+    networks:
+      defaultnetwork:
+        ipv4_address: 10.200.0.2
+
+  GatewayNode: #ノードの名前。このコンテナに入りますよ。
+    build: 
+      #この中にあるdockerfileを使って作りますよ。
+      context: .
+      dockerfile: ./GatewayNode/Dockerfile
+    image: gateway-image
+    # コンテナの名前を指定
+    container_name:  gateway-container
+    #コンソールで入れるようにする
+    stdin_open: true
+    tty: true
+    #ホストの中でのファイルが、docker内のここに反映される。
+    volumes:
+      - ./GatewayNode:/root/opt/home/sekigawa/gateway
+    networks:
+      defaultnetwork:
+        ipv4_address: 10.200.0.4
+
+  CR2: #ノードの名前。このコンテナに入りますよ。
+    build: 
+      #この中にあるdockerfileを使って作りますよ。
+      context: .
+      dockerfile: ./CR/CR2/Dockerfile
+    image: cr2-image
+    # コンテナの名前を指定
+    container_name:  cr2-container
+    #コンソールで入れるようにする
+    stdin_open: true
+    tty: true
+    #ホストの中でのファイルが、docker内のここに反映される。
+    volumes:
+      - ./CR/CR2:/root/opt/home/sekigawa/CR/cr2
+    networks:
+      defaultnetwork:
+        ipv4_address: 10.200.0.5
+
+  BCNode1: #ノードの名前。このコンテナに入りますよ。
+    build: 
+      #この中にあるdockerfileを使って作りますよ。
+      context: .
+      dockerfile: ./BCNode/BCNode1/Dockerfile
+    image: bcnode1-image
+
+    # コンテナの名前を指定
+    container_name:  bcnode1-container
+    #コンソールで入れるようにする
+    stdin_open: true
+    tty: true
+    #ホストの中でのファイルが、docker内のここに反映される。
+    volumes:
+      - ./BCNode/BCNode1:/root/opt/home/sekigawa/BCNode/bcnode1
+    networks:
+      defaultnetwork:
+        ipv4_address: 10.200.0.6
+
+  BCNode2: #ノードの名前。このコンテナに入りますよ。
+    build: 
+      #この中にあるdockerfileを使って作りますよ。
+      context: .
+      dockerfile: ./BCNode/BCNode2/Dockerfile
+    image: bcnode2-image
+    # コンテナの名前を指定
+    container_name:  bcnode2-container
+    #コンソールで入れるようにする
+    stdin_open: true
+    tty: true
+    #ホストの中でのファイルが、docker内のここに反映される。
+    volumes:
+      - ./BCNode/BCNode2:/root/opt/home/sekigawa/BCNode/bcnode2
+    networks:
+      defaultnetwork:
+        ipv4_address: 10.200.0.7
+  
+  BCNode3: #ノードの名前。このコンテナに入りますよ。
+    build: 
+      #この中にあるdockerfileを使って作りますよ。
+      context: .
+      dockerfile: ./BCNode/BCNode3/Dockerfile
+    image: bcnode3-image
+    # コンテナの名前を指定
+    container_name:  bcnode3-container
+    #コンソールで入れるようにする
+    stdin_open: true
+    tty: true
+    #ホストの中でのファイルが、docker内のここに反映される。
+    volumes:
+      - ./BCNode/BCNode3:/root/opt/home/sekigawa/BCNode/bcnode3
+    networks:
+      defaultnetwork:
+        ipv4_address: 10.200.0.8
+
+#ハード側のネットワーク
+networks:
+  defaultnetwork:
+    #同一ホスト内でのコンテナ通信。
+    #ハード的には同一ネットワーク(ICN上はFIBで制御)
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.200.0.0/24

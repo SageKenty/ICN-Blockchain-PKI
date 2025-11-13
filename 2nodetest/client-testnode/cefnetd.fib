@@ -1,0 +1,3 @@
+#最初をccnxで始めないとエラーになる。
+ccnx:/test udp 10.0.0.3
+ccnx:/request udp 10.0.0.3

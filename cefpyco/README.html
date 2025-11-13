@@ -1,0 +1,684 @@
+<!DOCTYPE html><html><head>
+      <title>README</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      
+      <link rel="stylesheet" href="file:///c:\Users\1720018\.vscode\extensions\shd101wyy.markdown-preview-enhanced-0.6.8\node_modules\@shd101wyy\mume\dependencies\katex\katex.min.css">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <style>
+      /**
+ * prism.js Github theme based on GitHub's theme.
+ * @author Sam Clarke
+ */
+code[class*="language-"],
+pre[class*="language-"] {
+  color: #333;
+  background: none;
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.4;
+
+  -moz-tab-size: 8;
+  -o-tab-size: 8;
+  tab-size: 8;
+
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+  padding: .8em;
+  overflow: auto;
+  /* border: 1px solid #ddd; */
+  border-radius: 3px;
+  /* background: #fff; */
+  background: #f5f5f5;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+  padding: .1em;
+  border-radius: .3em;
+  white-space: normal;
+  background: #f5f5f5;
+}
+
+.token.comment,
+.token.blockquote {
+  color: #969896;
+}
+
+.token.cdata {
+  color: #183691;
+}
+
+.token.doctype,
+.token.punctuation,
+.token.variable,
+.token.macro.property {
+  color: #333;
+}
+
+.token.operator,
+.token.important,
+.token.keyword,
+.token.rule,
+.token.builtin {
+  color: #a71d5d;
+}
+
+.token.string,
+.token.url,
+.token.regex,
+.token.attr-value {
+  color: #183691;
+}
+
+.token.property,
+.token.number,
+.token.boolean,
+.token.entity,
+.token.atrule,
+.token.constant,
+.token.symbol,
+.token.command,
+.token.code {
+  color: #0086b3;
+}
+
+.token.tag,
+.token.selector,
+.token.prolog {
+  color: #63a35c;
+}
+
+.token.function,
+.token.namespace,
+.token.pseudo-element,
+.token.class,
+.token.class-name,
+.token.pseudo-class,
+.token.id,
+.token.url-reference .token.variable,
+.token.attr-name {
+  color: #795da3;
+}
+
+.token.entity {
+  cursor: help;
+}
+
+.token.title,
+.token.title .token.punctuation {
+  font-weight: bold;
+  color: #1d3e81;
+}
+
+.token.list {
+  color: #ed6a43;
+}
+
+.token.inserted {
+  background-color: #eaffea;
+  color: #55a532;
+}
+
+.token.deleted {
+  background-color: #ffecec;
+  color: #bd2c00;
+}
+
+.token.bold {
+  font-weight: bold;
+}
+
+.token.italic {
+  font-style: italic;
+}
+
+
+/* JSON */
+.language-json .token.property {
+  color: #183691;
+}
+
+.language-markup .token.tag .token.punctuation {
+  color: #333;
+}
+
+/* CSS */
+code.language-css,
+.language-css .token.function {
+  color: #0086b3;
+}
+
+/* YAML */
+.language-yaml .token.atrule {
+  color: #63a35c;
+}
+
+code.language-yaml {
+  color: #183691;
+}
+
+/* Ruby */
+.language-ruby .token.function {
+  color: #333;
+}
+
+/* Markdown */
+.language-markdown .token.url {
+  color: #795da3;
+}
+
+/* Makefile */
+.language-makefile .token.symbol {
+  color: #795da3;
+}
+
+.language-makefile .token.variable {
+  color: #183691;
+}
+
+.language-makefile .token.builtin {
+  color: #0086b3;
+}
+
+/* Bash */
+.language-bash .token.keyword {
+  color: #0086b3;
+}
+
+/* highlight */
+pre[data-line] {
+  position: relative;
+  padding: 1em 0 1em 3em;
+}
+pre[data-line] .line-highlight-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: transparent;
+  display: block;
+  width: 100%;
+}
+
+pre[data-line] .line-highlight {
+  position: absolute;
+  left: 0;
+  right: 0;
+  padding: inherit 0;
+  margin-top: 1em;
+  background: hsla(24, 20%, 50%,.08);
+  background: linear-gradient(to right, hsla(24, 20%, 50%,.1) 70%, hsla(24, 20%, 50%,0));
+  pointer-events: none;
+  line-height: inherit;
+  white-space: pre;
+}
+
+pre[data-line] .line-highlight:before, 
+pre[data-line] .line-highlight[data-end]:after {
+  content: attr(data-start);
+  position: absolute;
+  top: .4em;
+  left: .6em;
+  min-width: 1em;
+  padding: 0 .5em;
+  background-color: hsla(24, 20%, 50%,.4);
+  color: hsl(24, 20%, 95%);
+  font: bold 65%/1.5 sans-serif;
+  text-align: center;
+  vertical-align: .3em;
+  border-radius: 999px;
+  text-shadow: none;
+  box-shadow: 0 1px white;
+}
+
+pre[data-line] .line-highlight[data-end]:after {
+  content: attr(data-end);
+  top: auto;
+  bottom: .4em;
+}html body{font-family:"Helvetica Neue",Helvetica,"Segoe UI",Arial,freesans,sans-serif;font-size:16px;line-height:1.6;color:#333;background-color:#fff;overflow:initial;box-sizing:border-box;word-wrap:break-word}html body>:first-child{margin-top:0}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{line-height:1.2;margin-top:1em;margin-bottom:16px;color:#000}html body h1{font-size:2.25em;font-weight:300;padding-bottom:.3em}html body h2{font-size:1.75em;font-weight:400;padding-bottom:.3em}html body h3{font-size:1.5em;font-weight:500}html body h4{font-size:1.25em;font-weight:600}html body h5{font-size:1.1em;font-weight:600}html body h6{font-size:1em;font-weight:600}html body h1,html body h2,html body h3,html body h4,html body h5{font-weight:600}html body h5{font-size:1em}html body h6{color:#5c5c5c}html body strong{color:#000}html body del{color:#5c5c5c}html body a:not([href]){color:inherit;text-decoration:none}html body a{color:#08c;text-decoration:none}html body a:hover{color:#00a3f5;text-decoration:none}html body img{max-width:100%}html body>p{margin-top:0;margin-bottom:16px;word-wrap:break-word}html body>ul,html body>ol{margin-bottom:16px}html body ul,html body ol{padding-left:2em}html body ul.no-list,html body ol.no-list{padding:0;list-style-type:none}html body ul ul,html body ul ol,html body ol ol,html body ol ul{margin-top:0;margin-bottom:0}html body li{margin-bottom:0}html body li.task-list-item{list-style:none}html body li>p{margin-top:0;margin-bottom:0}html body .task-list-item-checkbox{margin:0 .2em .25em -1.8em;vertical-align:middle}html body .task-list-item-checkbox:hover{cursor:pointer}html body blockquote{margin:16px 0;font-size:inherit;padding:0 15px;color:#5c5c5c;background-color:#f0f0f0;border-left:4px solid #d6d6d6}html body blockquote>:first-child{margin-top:0}html body blockquote>:last-child{margin-bottom:0}html body hr{height:4px;margin:32px 0;background-color:#d6d6d6;border:0 none}html body table{margin:10px 0 15px 0;border-collapse:collapse;border-spacing:0;display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}html body table th{font-weight:bold;color:#000}html body table td,html body table th{border:1px solid #d6d6d6;padding:6px 13px}html body dl{padding:0}html body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:bold}html body dl dd{padding:0 16px;margin-bottom:16px}html body code{font-family:Menlo,Monaco,Consolas,'Courier New',monospace;font-size:.85em !important;color:#000;background-color:#f0f0f0;border-radius:3px;padding:.2em 0}html body code::before,html body code::after{letter-spacing:-0.2em;content:"\00a0"}html body pre>code{padding:0;margin:0;font-size:.85em !important;word-break:normal;white-space:pre;background:transparent;border:0}html body .highlight{margin-bottom:16px}html body .highlight pre,html body pre{padding:1em;overflow:auto;font-size:.85em !important;line-height:1.45;border:#d6d6d6;border-radius:3px}html body .highlight pre{margin-bottom:0;word-break:normal}html body pre code,html body pre tt{display:inline;max-width:initial;padding:0;margin:0;overflow:initial;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}html body pre code:before,html body pre tt:before,html body pre code:after,html body pre tt:after{content:normal}html body p,html body blockquote,html body ul,html body ol,html body dl,html body pre{margin-top:0;margin-bottom:16px}html body kbd{color:#000;border:1px solid #d6d6d6;border-bottom:2px solid #c7c7c7;padding:2px 4px;background-color:#f0f0f0;border-radius:3px}@media print{html body{background-color:#fff}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{color:#000;page-break-after:avoid}html body blockquote{color:#5c5c5c}html body pre{page-break-inside:avoid}html body table{display:table}html body img{display:block;max-width:100%;max-height:100%}html body pre,html body code{word-wrap:break-word;white-space:pre}}.markdown-preview{width:100%;height:100%;box-sizing:border-box}.markdown-preview .pagebreak,.markdown-preview .newpage{page-break-before:always}.markdown-preview pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}.markdown-preview pre.line-numbers>code{position:relative}.markdown-preview pre.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:1em;font-size:100%;left:0;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.markdown-preview pre.line-numbers .line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}.markdown-preview pre.line-numbers .line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:.8em;text-align:right}.markdown-preview .mathjax-exps .MathJax_Display{text-align:center !important}.markdown-preview:not([for="preview"]) .code-chunk .btn-group{display:none}.markdown-preview:not([for="preview"]) .code-chunk .status{display:none}.markdown-preview:not([for="preview"]) .code-chunk .output-div{margin-bottom:16px}.markdown-preview .md-toc{padding:0}.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link{display:inline;padding:.25rem 0}.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link p,.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link div{display:inline}.markdown-preview .md-toc .md-toc-link-wrapper.highlighted .md-toc-link{font-weight:800}.scrollbar-style::-webkit-scrollbar{width:8px}.scrollbar-style::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}.scrollbar-style::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode]){position:relative;width:100%;height:100%;top:0;left:0;margin:0;padding:0;overflow:auto}html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{position:relative;top:0}@media screen and (min-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em calc(50% - 457px + 2em)}}@media screen and (max-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{font-size:14px !important;padding:1em}}@media print{html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{display:none}}html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{position:fixed;bottom:8px;left:8px;font-size:28px;cursor:pointer;color:inherit;z-index:99;width:32px;text-align:center;opacity:.4}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] #sidebar-toc-btn{opacity:1}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc{position:fixed;top:0;left:0;width:300px;height:100%;padding:32px 0 48px 0;font-size:14px;box-shadow:0 0 4px rgba(150,150,150,0.33);box-sizing:border-box;overflow:auto;background-color:inherit}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar{width:8px}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc a{text-decoration:none}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc{padding:0 16px}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link{display:inline;padding:.25rem 0}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link p,html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link div{display:inline}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper.highlighted .md-toc-link{font-weight:800}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{left:300px;width:calc(100% -  300px);padding:2em calc(50% - 457px -  300px/2);margin:0;box-sizing:border-box}@media screen and (max-width:1274px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{width:100%}}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .markdown-preview{left:50%;transform:translateX(-50%)}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .md-sidebar-toc{display:none}
+/* Please visit the URL below for more information: */
+/*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
+
+      </style>
+    </head>
+    <body for="html-export">
+      <div class="mume markdown-preview  ">
+      <h1 class="mume-header" id="cefore-python-compact-package-cefpyco">Cefore Python Compact package: cefpyco</h1>
+
+<ul>
+<li><a href="#cefore-python-compact-package-cefpyco">Cefore Python Compact package: cefpyco</a>
+<ul>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#installation">Installation</a>
+<ul>
+<li><a href="#installing-cefore">Installing Cefore</a></li>
+<li><a href="#installing-cefpyco-for-linux">Installing Cefpyco (for Linux)</a></li>
+<li><a href="#installing-cefpyco-for-os-x">Installing Cefpyco (for OS X)</a></li>
+<li><a href="#buildbash-script">Build.bash script</a></li>
+<li><a href="#uninstalling-cefpyco">Uninstalling Cefpyco</a></li>
+</ul>
+</li>
+<li><a href="#configuration">Configuration</a>
+<ul>
+<li><a href="#srccefpyco">src/cefpyco</a></li>
+<li><a href="#srccefpyco_wrap">src/cefpyco_wrap</a></li>
+<li><a href="#srccefpyco_c">src/cefpyco_c</a></li>
+<li><a href="#cefapp">cefapp</a></li>
+<li><a href="#test">test</a></li>
+</ul>
+</li>
+<li><a href="#how-to-use-cefpyco">How to use cefpyco</a>
+<ul>
+<li><a href="#connecting-to-and-disconnecting-from-cefnetd">Connecting to and disconnecting from cefnetd</a></li>
+<li><a href="#sending-interest-packets">Sending Interest packets</a></li>
+<li><a href="#sending-data-packets">Sending Data packets</a></li>
+<li><a href="#receiving-packets">Receiving packets</a></li>
+<li><a href="#creating-publisher-app">Creating Publisher App</a></li>
+<li><a href="#creating-consumer-app">Creating Consumer app</a></li>
+</ul>
+</li>
+<li><a href="#notes">Notes</a></li>
+</ul>
+</li>
+</ul>
+<h2 class="mume-header" id="overview">Overview</h2>
+
+<p><code>cefpyco</code> is a Python package for Cefore applications.
+It has the following features.</p>
+<ul>
+<li>Cefore functions, which are written in C, can be called from Python programs.
+<ul>
+<li>It is easier to develop Cefore applications in Python than in C.</li>
+</ul>
+</li>
+<li>Interest and Data transmission/reception can be executed with a single function.</li>
+<li>Support for &quot;with&quot; blocks, enabling the easy programming of initialization and termination of connections with cefnetd.</li>
+<li>A simple application that sends back Data in response to receiving an Interest can be easily developed.
+<ul>
+<li>This means content can be provided without accessing csmgrd.</li>
+</ul>
+</li>
+<li>Optional TLVs are supported (e.g., chunk number, termination chunk number, maximum hop count, Interest lifetime, content expiration, and cache expiration).</li>
+<li>InterestReturn packets are supported.
+<ul>
+<li>InterestReturn is an Interest packet returned only when an Interest packet is lost (it works like NACK).</li>
+<li>Note that InterestReturn with &quot;No Route&quot; is returned when the upstream router or FIB is not appropriately set.</li>
+</ul>
+</li>
+</ul>
+<h2 class="mume-header" id="installation">Installation</h2>
+
+<h3 class="mume-header" id="installing-cefore">Installing Cefore</h3>
+
+<p>First, install Cefore on your PC (target version: 0.10.0d or later).
+To install Cefore, visit the Cefore website (<a href="https://cefore.net">https://cefore.net</a>) or GitHub (<a href="https://github.com/cefore/cefore">https://github.com/cefore/cefore</a>).
+(The user manual is available at <a href="https://cefore.net/instruction">https://cefore.net/instruction</a> and the source code is available at <a href="https://cefore.net/download">https://cefore.net/download</a>).</p>
+<h3 class="mume-header" id="installing-cefpyco-for-linux">Installing Cefpyco (for Linux)</h3>
+
+<p>Execute the following commands in an environment where Cefore and Python are installed.
+(Do not forget to add &quot;.&quot; with cmake).</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash"><span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> cmake python3-pip python3-dev python3-venv
+pip3 <span class="token function">install</span> --upgrade build
+pip3 <span class="token function">install</span> numpy click rich pytest pytest-sugar
+cmake <span class="token builtin class-name">.</span>
+<span class="token function">make</span>
+<span class="token function">make</span> <span class="token function">install</span>
+</pre><p>After executing the above commands, you can <code>import cefpyco</code> from any directory.</p>
+<p>For Python packages, setuptools is required for installation, but numpy, click, rich and pytest are options when using cefapp.</p>
+<h3 class="mume-header" id="installing-cefpyco-for-os-x">Installing Cefpyco (for OS X)</h3>
+
+<p>This manual assumes an environment built using brew and pyenv.
+Specifically, assume an environment installed with the following commands:</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash">brew <span class="token function">install</span> cmake pyenv openssl
+<span class="token function">env</span> <span class="token assign-left variable">PYTHON_CONFIGURE_OPTS</span><span class="token operator">=</span><span class="token string">&apos;--enable-framework&apos;</span> pyenv <span class="token function">install</span> <span class="token number">3</span>.x.x <span class="token comment"># Choose the version you want.</span>
+pyenv global <span class="token number">3</span>.x.x
+<span class="token builtin class-name">echo</span> <span class="token string">&apos;eval &quot;$(pyenv init -)&quot;&apos;</span> <span class="token operator">&gt;&gt;</span> ~/.bash_profile <span class="token comment"># Option.</span>
+</pre><p>Note that you must set the environment variables when you run <code>pyenv install</code>;
+otherwise later <code>make</code> command will fail.</p>
+<p>After rebooting your terminal or running <code>source ~/.bash_profile</code>, install the following packages:</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash">python -m pip --upgrade pip build
+python -m pip <span class="token function">install</span> numpy click rich pytest pytest-sugar
+</pre><p>Because cmake cannot automatically find the Python and OpenSSL root directories,
+you need to set the necessary variables.
+The root directory of the Python interpreter that you are using
+can be found with the following Python script:</p>
+<pre data-role="codeBlock" data-info="py" class="language-python"><span class="token keyword keyword-from">from</span> sysconfig <span class="token keyword keyword-import">import</span> get_config_var
+<span class="token keyword keyword-print">print</span><span class="token punctuation">(</span>get_config_var<span class="token punctuation">(</span><span class="token string">&quot;base&quot;</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+</pre><p>The OpenSSL root directory can be found with <code>brew --prefix openssl</code>.</p>
+<p>Using these paths, run the build process as follows:</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash"><span class="token assign-left variable">py_root</span><span class="token operator">=</span><span class="token punctuation">..</span>. <span class="token comment"># Set by the above command.</span>
+<span class="token assign-left variable">ssl_root</span><span class="token operator">=</span><span class="token punctuation">..</span>. <span class="token comment"># Set by the above command.</span>
+cmake -DPython_ROOT_DIR<span class="token operator">=</span><span class="token string">&quot;<span class="token variable">$py_root</span>&quot;</span> -DOPENSSL_ROOT_DIR<span class="token operator">=</span><span class="token string">&quot;<span class="token variable">$ssl_root</span>&quot;</span> <span class="token builtin class-name">.</span>
+<span class="token function">make</span>
+<span class="token function">make</span> <span class="token function">install</span>
+</pre><h3 class="mume-header" id="buildbash-script">Build.bash script</h3>
+
+<p>We provide <code>build.bash</code> to support the build process
+except for installing the required libraries.
+Note that this script is experimental.
+If you run this script and encounter any problems,
+please return to the manual build procedure explained above.</p>
+<h3 class="mume-header" id="uninstalling-cefpyco">Uninstalling Cefpyco</h3>
+
+<p>You can uninstall cefpyco by running <code>make uninstall</code>.</p>
+<h2 class="mume-header" id="configuration">Configuration</h2>
+
+<p>This cefpyco package consists of the following files and directories.</p>
+<ul>
+<li><code>README.md(.html)</code>: This document file.</li>
+<li><code>LICENSE</code>: License file.</li>
+<li><code>CmakeLists.txt</code>: Configuration file for cmake.</li>
+<li><code>src</code>: Source codes:
+<ul>
+<li><code>cefpyco/</code>: Main Python package for cefpyco (Python).</li>
+<li><code>cefpyco_wrap/</code>: C code for Cefore function calls (C-lang).</li>
+<li><code>cefpyco_c/</code>: Python/C wrapper code for cefpyco_c (C-lang).</li>
+</ul>
+</li>
+<li><code>cefapp</code>: Example applications for cefpyco.</li>
+<li><code>test</code>: Test codes. You can run them via <code>make test</code> or <code>pytest</code>.</li>
+<li><code>setup.py(.cfg)</code>, <code>pyproject.toml</code>: File containing configuration for cefpyco installation.</li>
+</ul>
+<p><code>CMakeLists.txt</code> exists in each directory as a configuration file for cmake.</p>
+<p>The files in each directory are as follows.</p>
+<h3 class="mume-header" id="srccefpyco">src/cefpyco</h3>
+
+<ul>
+<li><code>__init__.py</code>: File to be executed when importing a cefpyco package.</li>
+<li><code>core.py</code>: File describing the main functions of cefpyco.</li>
+</ul>
+<h3 class="mume-header" id="srccefpyco_wrap">src/cefpyco_wrap</h3>
+
+<ul>
+<li><code>pywrap_cefpyco.c</code>, <code>include/pywrap.h</code>: Python wrapper for Cefore that calls functions defined in cefpyco.c from Python programs.</li>
+</ul>
+<h3 class="mume-header" id="srccefpyco_c">src/cefpyco_c</h3>
+
+<p>The source and header files are listed together, but the header files are under the <code>include</code> directory.</p>
+<ul>
+<li><code>cefpyco.c(.h)</code>: Wraps Cefore functions and provides simplified functions.</li>
+<li><code>cefpyco_parse.c(.h)</code>: Provides functions to parse TLVs received by the cef_client_read function.</li>
+<li><code>cefpyco_def.h</code>: Definition of various constants.</li>
+<li><code>cefpyco_util.c(.h)</code>: Utilities.</li>
+<li><code>cefparse/cpcparse_tlv.c(.h)</code>: Provides functions for parsing TLV headers.</li>
+<li><code>cefparse/cpcparse_type.c(.h)</code>: Definitions of the cpcparse_parse_info structure and related functions to hold information during parsing.</li>
+<li><code>cefparse/cpcparse_app_frame_7_5.c(.h)</code>: Provides functions to parse received Data (<code>struct cef_app_frame</code>). Used in Cefore 0.7.5 or later versions.</li>
+<li><code>cefparse/cpcparse_app_frame.c(.h)</code>: Provides functions to parse received Data (<code>struct cef_app_frame</code>). Used in versions earlier than Cefore 0.7.5.</li>
+<li><code>cefparse/cpcparse_interest.c(.h)</code>: Provides functions to parse received Interest packets. Used in Cefore 0.7.5 or later versions.</li>
+<li><code>cefparse/cpcparse_intreturn.c(.h)</code>: Provides functions to parse received Interest Return packets. Used in Cefore 0.8.2.2 or later versions.</li>
+</ul>
+<h3 class="mume-header" id="cefapp">cefapp</h3>
+
+<p><code>cefapp</code> is the Python application that can communicate using cefpyco.
+<code>cefapp.py</code> provides the CefApp class for the communication with pipelines.</p>
+<p>Please read the <a href="./cefapp/README.md">README.md</a> of cefapp.</p>
+<h3 class="mume-header" id="test">test</h3>
+
+<ul>
+<li><code>test_cefpyco.c</code>: Code for automatic testing of features in the <a href="http://libcefpyco.so">libcefpyco.so</a> shared library.</li>
+<li><code>test_libcefpycotest.py</code>: Code for automatic testing of features in the <a href="http://libcefpyco.so">libcefpyco.so</a> shared library.</li>
+<li><code>test_core.py</code>: Code for automatic testing of cefpyco/core.py.</li>
+<li><code>cefpycotest.py</code>: Code for manual testing of features in the <a href="http://libcefpyco.so">libcefpyco.so</a> shared library.</li>
+</ul>
+<h2 class="mume-header" id="how-to-use-cefpyco">How to use cefpyco</h2>
+
+<p>The following describes how to communicate with cefnetd using cefpyco.</p>
+<h3 class="mume-header" id="connecting-to-and-disconnecting-from-cefnetd">Connecting to and disconnecting from cefnetd</h3>
+
+<p>**The process from connection to disconnection can be implemented using <code>cefpyco.create_handle()</code>. **</p>
+<pre data-role="codeBlock" data-info="python" class="language-python"><span class="token keyword keyword-import">import</span> cefpyco
+
+<span class="token keyword keyword-with">with</span> cefpyco<span class="token punctuation">.</span>create_handle<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword keyword-as">as</span> handle<span class="token punctuation">:</span>
+    <span class="token comment"># Write code.</span>
+    Pass<span class="token punctuation">:</span> <span class="token comment"># Write code.</span>
+</pre><p>&quot;handle&quot; is an instance of the CefpycoHandle class, through which applications communicate. As in the case of file processing with the &quot;with&quot; block, at the beginning of the &quot;with&quot; block, the connection with Cefore is initialized, and at the end of the &quot;with&quot; block, the connection is terminated.</p>
+<p>The <code>create_handle()</code> function has the following optional arguments.</p>
+<ul>
+<li>enable_log(default value: True): Enables/disables displaying of cefpyco&apos;s log.</li>
+<li>ceforedir(default value: None): Specifies the directory where Cefore configuration files such as cefnetd.conf are located.
+<ul>
+<li>If <code>None&apos; is specified, the value of the environment variable</code>CEFORE_DIR` is used.</li>
+<li>If the environment variable is also empty, the default installation directory <code>/usr/local/cefore</code> is used.</li>
+</ul>
+</li>
+<li>portnum (default value: 9896): cefnetd port number to which the application connects.</li>
+</ul>
+<p>Note: If you use the &quot;with&quot; block, you cannot use &quot;handle&quot; outside of that block. Additionally, unlike file handling,
+<strong>It is not possible to execute <code>cefpyco.create_handle()</code> again inside a &quot;with&quot; block</strong> (singleton pattern).</p>
+<p>If you do not want to use the &quot;with&quot; block, create a CefpycoHandle instance (see below), call the <code>begin()</code> method before your code, and call the <code>end()</code> method at the end.</p>
+<pre data-role="codeBlock" data-info="python" class="language-python"><span class="token keyword keyword-import">import</span> cefpyco
+
+CefpycoHandle<span class="token punctuation">(</span><span class="token punctuation">)</span>
+handle<span class="token punctuation">.</span>begin<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token comment"># Write code</span>
+handle<span class="token punctuation">.</span>end<span class="token punctuation">(</span><span class="token punctuation">)</span>
+</pre><h3 class="mume-header" id="sending-interest-packets">Sending Interest packets</h3>
+
+<p>The following is an example implementation of sending an Interest packet.</p>
+<pre data-role="codeBlock" data-info="python" class="language-python"><span class="token keyword keyword-import">import</span> cefpyco
+
+<span class="token keyword keyword-with">with</span> cefpyco<span class="token punctuation">.</span>create_handle<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword keyword-as">as</span> h<span class="token punctuation">:</span>
+    h<span class="token punctuation">.</span>send_interest<span class="token punctuation">(</span><span class="token string">&quot;ccnx:/test&quot;</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span>
+</pre><p><strong>With <code>h.send_interest(name, chunk_num)</code>, Interest packets are sent with the content <code>name</code> and <code>chunk_num</code>.</strong></p>
+<p>If you want to receive multiple chunks, you need to send multiple Interests. For example, if you want to receive 100 chunks, do the following.</p>
+<pre data-role="codeBlock" data-info="python" class="language-python"><span class="token keyword keyword-import">import</span> cefpyco
+
+<span class="token keyword keyword-with">with</span> cefpyco<span class="token punctuation">.</span>create_handle<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword keyword-as">as</span> h<span class="token punctuation">:</span>
+    <span class="token keyword keyword-for">for</span> i <span class="token keyword keyword-in">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        h<span class="token punctuation">.</span>send_interest<span class="token punctuation">(</span><span class="token string">&quot;ccnx:/test&quot;</span><span class="token punctuation">,</span> i<span class="token punctuation">)</span>
+</pre><p>Note that this is only used for sending Interest packets. For receiving Data packets, see &quot;Receiving packets&quot; described below.</p>
+<p>It also has the following keyword arguments.</p>
+<ul>
+<li><code>hop_limit</code>: The maximum number of hops for an Interest.</li>
+<li><code>lifetime</code>: Lifetime of an Interest (specified in milliseconds).</li>
+</ul>
+<p>In addition, if you wish to use Symbolic Interest (SMI) instead of regular Interest, use
+<strong><code>h.send_symbolic_interest(name)</code></strong>.
+SMI has the following two characteristics.</p>
+<ol>
+<li>The PIT entry is not deleted when cefnetd receives Data, only after timeout.</li>
+<li>Any chunk data can be received if a name prefix without a chunk number is specified.
+<ul>
+<li>Example: If you request <code>ccnx:/a</code> in SMI, you will receive all chunks named <code>ccnx:/a/Chunk=0</code>, <code>ccnx:/a/Chunk=1</code>, ..., etc.</li>
+</ul>
+</li>
+</ol>
+<p>This is mainly useful for real-time video streaming.</p>
+<h3 class="mume-header" id="sending-data-packets">Sending Data packets</h3>
+
+<p>The following is an example implementation of the process of sending Data packets.</p>
+<pre data-role="codeBlock" data-info="python" class="language-python"><span class="token keyword keyword-import">import</span> cefpyco
+
+<span class="token keyword keyword-with">with</span> cefpyco<span class="token punctuation">.</span>create_handle<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword keyword-as">as</span> h<span class="token punctuation">:</span>
+    h<span class="token punctuation">.</span>send_data<span class="token punctuation">(</span><span class="token string">&quot;ccnx:/test&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;hello&quot;</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span>
+</pre><p>**The <code>h.send_data(name, payload, chunk_num)</code> method requires that the content <code>name</code>, <code>chunk_num</code>, and payload(data in cob) be specified. **
+The payload type can be byte or string.</p>
+<p>As with the Interest packet, this is a method that only sends Data packets. For responding to an Interest packet after receiving it, see &quot;Receiving packets&quot; below.</p>
+<p>It also has the following keyword arguments.</p>
+<ul>
+<li><code>end_chunk_num</code>: End chunk number of the content. If the Producer knows the number of chunks of the entire content in advance, this is used to inform the Consumer of the chunk number to request.</li>
+<li><code>hop_limit</code>: Maximum number of hops.</li>
+<li><code>expiry</code>: Expiry time of the content. The relative time from the current time in milliseconds.</li>
+<li><code>cache_time</code>: Recommended cache time for the content. The relative time from the current time in milliseconds.</li>
+</ul>
+<h3 class="mume-header" id="receiving-packets">Receiving packets</h3>
+
+<p>**The method for receiving a packet is <code>h.receive()</code>, and it returns the CcnPacketInfo object. **</p>
+<p>The following is an example implementation, which waits for Data reception after sending an Interest (it also shows the details of the last received Data).</p>
+<pre data-role="codeBlock" data-info="python" class="language-python"><span class="token keyword keyword-import">import</span> cefpyco
+
+<span class="token keyword keyword-with">with</span> cefpyco<span class="token punctuation">.</span>create_handle<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword keyword-as">as</span> h<span class="token punctuation">:</span>
+    h<span class="token punctuation">.</span>send_interest<span class="token punctuation">(</span><span class="token string">&quot;ccnx:/test&quot;</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span>
+    info <span class="token operator">=</span> h<span class="token punctuation">.</span>receive<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword keyword-print">print</span><span class="token punctuation">(</span><span class="token string">&quot;info.is_succeeded:{0}&quot;</span><span class="token punctuation">.</span><span class="token builtin">format</span><span class="token punctuation">(</span>info<span class="token punctuation">.</span>is_succeeded<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword keyword-print">print</span><span class="token punctuation">(</span><span class="token string">&quot;info.is_failed:{0}&quot;</span><span class="token punctuation">.</span><span class="token builtin">format</span><span class="token punctuation">(</span>info<span class="token punctuation">.</span>is_failed<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword keyword-print">print</span><span class="token punctuation">(</span><span class="token string">&quot;info.version:{0}&quot;</span><span class="token punctuation">.</span><span class="token builtin">format</span><span class="token punctuation">(</span>info<span class="token punctuation">.</span>version<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword keyword-print">print</span><span class="token punctuation">(</span><span class="token string">&quot;info.type:{0}&quot;</span><span class="token punctuation">.</span><span class="token builtin">format</span><span class="token punctuation">(</span>info<span class="token punctuation">.</span><span class="token builtin">type</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword keyword-print">print</span><span class="token punctuation">(</span><span class="token string">&quot;info.actual_data_len:{0}&quot;</span><span class="token punctuation">.</span><span class="token builtin">format</span><span class="token punctuation">(</span>info<span class="token punctuation">.</span>actual_data_len<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword keyword-print">print</span><span class="token punctuation">(</span><span class="token string">&quot;info.name:{0}&quot;</span><span class="token punctuation">.</span><span class="token builtin">format</span><span class="token punctuation">(</span>info<span class="token punctuation">.</span>name<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword keyword-print">print</span><span class="token punctuation">(</span><span class="token string">&quot;info.name_len:{0}&quot;</span><span class="token punctuation">.</span><span class="token builtin">format</span><span class="token punctuation">(</span>info<span class="token punctuation">.</span>name_len<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword keyword-print">print</span><span class="token punctuation">(</span><span class="token string">&quot;info.chunk_num:{0}&quot;</span><span class="token punctuation">.</span><span class="token builtin">format</span><span class="token punctuation">(</span>info<span class="token punctuation">.</span>chunk_num<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword keyword-print">print</span><span class="token punctuation">(</span><span class="token string">&quot;info.end_chunk_num:{0}&quot;</span><span class="token punctuation">.</span><span class="token builtin">format</span><span class="token punctuation">(</span>info<span class="token punctuation">.</span>end_chunk_num<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword keyword-print">print</span><span class="token punctuation">(</span><span class="token string">&quot;info.payload:{0}&quot;</span><span class="token punctuation">.</span><span class="token builtin">format</span><span class="token punctuation">(</span>info<span class="token punctuation">.</span>payload<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword keyword-print">print</span><span class="token punctuation">(</span><span class="token string">&quot;info.payload_s:{0}&quot;</span><span class="token punctuation">.</span><span class="token builtin">format</span><span class="token punctuation">(</span>info<span class="token punctuation">.</span>payload_s<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword keyword-print">print</span><span class="token punctuation">(</span><span class="token string">&quot;info.payload_len:{0}&quot;</span><span class="token punctuation">.</span><span class="token builtin">format</span><span class="token punctuation">(</span>info<span class="token punctuation">.</span>payload_len<span class="token punctuation">)</span><span class="token punctuation">)</span>
+</pre><p>The **receive method has the optional argument <code>error_on_timeout</code> (default value: False).
+It waits for about 4 seconds after the method is executed and returns the process if it cannot receive the message. **
+If you want to receive packets until a successful packet reception, you need to use a loop syntax such as &quot;while.&quot;
+In this case, if error_on_timeout is set to &quot;True,&quot; CefpycoHandle disconnects from Cefore. (It cannot receive anything anymore.)</p>
+<p>The receive method returns the received result in a CcnPacketInfo object, regardless of whether the received packet is an Interest or Data packet. The meaning of each property value of this object is as follows.</p>
+<ul>
+<li>is_succeeded/is_failed: Success/failure flag of packet reception.</li>
+<li>version: Version value of the received packet.</li>
+<li>type: Type value of the received packet, which can distinguish Data/Interest/InterestReturn.</li>
+<li>returncode: ReturnCode value if InterestReturn was returned (see [RFC8609] (<a href="https://datatracker.ietf.org/doc/html/rfc8609#section-4.2">https://datatracker.ietf.org/doc/html/rfc8609#section-4.2</a>)).</li>
+<li>actual_data_len: Byte length of the received packet (or data) including its header.</li>
+<li>name: Name expressed in string type.</li>
+<li>name_len: Length of the name.</li>
+<li>chunk_num: Number of chunks.</li>
+<li>end_chunk_num: Last chunk number of the content (available only when you set it at the data producer app.).</li>
+<li>payload: Byte sequence of the payload (displayed as <code>(empty)</code> if the value is empty); returns &quot;str&quot; in Python 2, &quot;bytes&quot; in Python 3.</li>
+<li>payload_len: Length of the payload. If it is empty, it is set to 0.</li>
+</ul>
+<p>The CcnPacketInfo object also has the <code>is_interest</code>, <code>is_data</code>, and <code>is_interest_return</code> (or <code>is_return</code>) properties.
+These can be used to distinguish which type of CCN packet the received packet is.
+For example, in the case of a Consumer app that sends Interests and receives Data, it is possible to receive InterestReturn as well as Data. (For example, if cefnetd has no upstream route configured, it will receive an InterestReturn indicating <code>No Route</code>. Therefore, it is necessary to distinguish such received packets.)</p>
+<p>When an Interest is received, to determine whether it is an SMI or not, the <code>is_symbolic</code> property can be used.
+The <code>is_regular_interest</code> and <code>is_symbolic_interest</code> properties are used to distinguish a regular Interest from an SMI.</p>
+<p>The following points should be noted.</p>
+<ul>
+<li>The receive method does not wait for all packets received by cefnetd.
+<ul>
+<li>To receive Interest packets in your app, you need to call the &quot;register&quot; method.</li>
+<li>In order to receive Data packets in your app, Interest packets must be sent first.</li>
+</ul>
+</li>
+<li>Because the cefnetd buffer cannot store many packets, the receive method must be called at appropriate intervals.
+We recommend that you implement such that the application receives packets from cefnetd by calling the receive method at appropriate intervals.</li>
+<li>Data packets are inserted into a structure prepared for Cefore apps and sent to the app; therefore, <code>actual_data_len</code> may not necessarily match the length of the CCNx packet format specification.</li>
+</ul>
+<h3 class="mume-header" id="creating-publisher-app">Creating Publisher App</h3>
+
+<p>Using the previous functions, we can create a Publisher app (an app that listens for Interests and then sends back Data packets). The following example implements a Publisher app.</p>
+<pre data-role="codeBlock" data-info="python" class="language-python"><span class="token keyword keyword-import">import</span> cefpyco
+
+<span class="token keyword keyword-with">with</span> cefpyco<span class="token punctuation">.</span>create_handle<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword keyword-as">as</span> h<span class="token punctuation">:</span>
+    h<span class="token punctuation">.</span>register<span class="token punctuation">(</span><span class="token string">&quot;ccnx:/test&quot;</span><span class="token punctuation">)</span>
+    <span class="token keyword keyword-while">while</span> <span class="token boolean">True</span><span class="token punctuation">:</span>
+        info <span class="token operator">=</span> h<span class="token punctuation">.</span>receive<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token keyword keyword-if">if</span> info<span class="token punctuation">.</span>is_success <span class="token keyword keyword-and">and</span> info<span class="token punctuation">.</span>name <span class="token operator">==</span> <span class="token string">&quot;ccnx:/test&quot;</span> <span class="token keyword keyword-and">and</span> info<span class="token punctuation">.</span>chunk_num <span class="token operator">==</span> <span class="token number">0</span>
+            h<span class="token punctuation">.</span>send_data<span class="token punctuation">(</span><span class="token string">&quot;ccnx:/test&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;hello&quot;</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span>
+            <span class="token comment"># break # Uncomment if publisher provides content once</span>
+</pre><p>**To wait for Interest packets, the <code>h.register()</code> method is used. **
+This method registers the prefix of the Interest that you want to receive from cefnetd.
+For example, in addition to <code>ccnx:/test</code>, you can receive Interests with a name such as <code>ccnx:/test/foo/bar.txt</code>.</p>
+<p>Then, by using the &quot;while loop&quot; syntax, the Publisher app continues to execute <code>h.receive()</code>.
+If the target Interest is successfully received, <code>h.send_data()</code> is called and a Data packet will be sent back.
+Because this is a Publisher app, it will keep looping indefinitely. If you want to provide the content just once, you can break the loop by inserting <code>break</code>.</p>
+<h3 class="mume-header" id="creating-consumer-app">Creating Consumer app</h3>
+
+<p>The following example implements a Consumer app (that waits for Data after sending an Interest).</p>
+<pre data-role="codeBlock" data-info="python" class="language-python"><span class="token keyword keyword-from">from</span> time <span class="token keyword keyword-import">import</span> sleep
+<span class="token keyword keyword-import">import</span> cefpyco
+
+<span class="token keyword keyword-with">with</span> cefpyco<span class="token punctuation">.</span>create_handle<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword keyword-as">as</span> h<span class="token punctuation">:</span>
+    <span class="token keyword keyword-while">while</span> <span class="token boolean">True</span><span class="token punctuation">:</span>
+        h<span class="token punctuation">.</span>send_interest<span class="token punctuation">(</span><span class="token string">&quot;ccnx:/test&quot;</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span>
+        info <span class="token operator">=</span> h<span class="token punctuation">.</span>receive<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token keyword keyword-if">if</span> info<span class="token punctuation">.</span>is_success <span class="token keyword keyword-and">and</span> info<span class="token punctuation">.</span>name <span class="token operator">==</span> <span class="token string">&quot;ccnx:/test&quot;</span> <span class="token keyword keyword-and">and</span> info<span class="token punctuation">.</span>chunk_num <span class="token operator">==</span> <span class="token number">0</span>
+            <span class="token keyword keyword-print">print</span><span class="token punctuation">(</span><span class="token string">&quot;Success&quot;</span><span class="token punctuation">)</span>
+            <span class="token keyword keyword-print">print</span><span class="token punctuation">(</span>info<span class="token punctuation">)</span>
+            <span class="token keyword keyword-break">break</span> <span class="token comment"># Uncomment if publisher provides content once</span>
+        sleep<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+</pre><p>**If you send Interests, you can then receive Data with the receive method. **
+If the Data is successfully received, print <code>Success</code> and exit.
+To consider the case that InterestReturn is returned if the content cannot be returned, <code>info.is_data</code> should be added to the condition.</p>
+<p>In this example, the receive method loops until Data is received. Note that if the interval for sending Interests is too short, Interest packets will be aggregated into PIT; therefore, one chunk is <code>sleep(1)</code> and the other chunk is <code>data</code>.</p>
+<p>In this example, the loop exits after one chunk is received. It is also possible to receive content consisting of multiple chunks by changing each chunk number. If you wish to receive content consisting of many chunks, you can send multiple Interests concurrently for high-speed communication. However, in such a case, you must make preparations for the sending of a large number of Interests simultaneously (due to the PIT size configured in cefnetd.conf and the limitation of the processing performance). It is recommended that you implement pipeline processing for such cases.</p>
+<h2 class="mume-header" id="notes">Notes</h2>
+
+<ul>
+<li>This tool was developed to simplify application development using Cefore. Bug reports are welcome.
+<ul>
+<li>It has only been confirmed to work on Ubuntu 16.04 and Raspberry Pi (as of cefpyco 0.2.0).</li>
+<li>It has also only been confirmed to work with Python 3.</li>
+<li>Bug reports can be sent to GitHub (<a href="https://github.com/cefore/cefore/issues">https://github.com/cefore/cefore/issues</a>).</li>
+</ul>
+</li>
+<li>If cefnetd is started with sudo privileges, sudo may be required even when using Python tools. If the tool fails to start, check the startup log to see if <code>Permission Denied</code> or a similar message is present. If necessary, run the Python tool with sudo privileges.</li>
+<li>If you terminate cefnetd using commands such as &quot;kill&quot; without using cefnetdstop, you will get the following error message:
+&quot;Another cefnetd is already listening on this port,&quot; and subsequent startup may fail.
+<ul>
+<li>The reason is that the socket file is still in the directory <code>/tmp</code>.</li>
+<li>In such a case, try <code>sudo cefnetdstop -F</code>, which will execute a forced termination, including deletion of the socket file.</li>
+</ul>
+</li>
+<li>If the application cannot receive Interests, check if there are some matching entries for the Interest name in the FIB.
+<ul>
+<li>In particular, if an entry for <code>ccnx:/</code> is registered in the FIB, that entry may be prioritized (as of Cefore 0.7.2).</li>
+<li>From Cefore 0.8.0, the specification has been changed so that the application preferentially receives the Interest.</li>
+</ul>
+</li>
+<li>If communication fails, check if buffer tuning is performed before starting cefnetd.
+<ul>
+<li>For Linux OS, execute the following.</li>
+</ul>
+<pre data-role="codeBlock" data-info class="language-"><code>$ _cef_mem_size=10000000
+$ sudo sysctl -w net.core.rmem_default=$_cef_mem_size
+$ sudo sysctl -w net.core.wmem_default=$_cef_mem_size
+$ sudo sysctl -w net.core.rmem_max=$_cef_mem_size
+$ sudo sysctl -w net.core.wmem_max=$_cef_mem_size
+</code></pre><ul>
+<li>For Mac OS, do the following.</li>
+</ul>
+<pre data-role="codeBlock" data-info class="language-"><code>$ sudo sysctl -w net.local.stream.sendspace=2000000
+$ sudo sysctl -w net.local.stream.recvspace=2000000
+</code></pre><ul>
+<li>Using a larger buffer is recommended, especially for executing high-speed communication and/or dealing with large files.</li>
+<li>Since this setting is initialized every time the PC is rebooted, ensure that measures are put in place to prevent forgetting to execute it. The configuration should be automatically executed at PC startup.</li>
+</ul>
+</li>
+<li>The default value for Interest lifetime is 4 seconds, and the default value for Data cache time (i.e., cache survival time) is 10 hours.
+<ul>
+<li>If you wish to change them, change the values in the corresponding parts of cefpyco.c.</li>
+</ul>
+</li>
+<li>After executing cmake, copying the entire directory to another location and trying to execute cmake again will fail.
+<ul>
+<li>If you wish to run cmake again, you need to delete the CMakeFiles directory, CMakeCache.txt, and cmake_install.cmake manually.</li>
+<li>Commands such as <code>cmake clean</code> do not exist.</li>
+</ul>
+</li>
+</ul>
+
+      </div>
+      
+      
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    </body></html>

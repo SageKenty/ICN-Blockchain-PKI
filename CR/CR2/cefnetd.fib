@@ -1,0 +1,10 @@
+#最初をccnx:/で始めないとエラーになる。
+#CRの設定の際"ccnx:/"までが必須条件
+ccnx:/BC/Block/BCNode1 udp 10.200.0.6
+ccnx:/BC/Register/BCNode1 udp 10.200.0.6
+
+ccnx:/BC/Block/BCNode2 udp 10.200.0.7
+ccnx:/BC/Register/BCNode2 udp 10.200.0.7
+
+ccnx:/BC/Block/BCNode3 udp 10.200.0.8
+ccnx:/BC/Register/BCNode3 udp 10.200.0.8

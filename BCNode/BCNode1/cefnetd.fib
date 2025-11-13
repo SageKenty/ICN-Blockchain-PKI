@@ -1,0 +1,3 @@
+#最初をccnx:/で始めないとエラーになる。
+ccnx:/ udp 10.200.0.5
+#ccnx:/BC/Block/BCNode2 udp 10.200.0.7
