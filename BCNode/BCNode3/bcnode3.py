@@ -178,11 +178,16 @@ def send_block_and_receive_result(handle,names,block_json):
                 
         
 
-def datasend(handle,name,message):
+def datasend(handle,name,message,option = None):
     print(message)
     if isinstance(message,dict):
         message = json.dumps(message).encode("utf-8")
-    handle.send_data(name,message,0)
+    if(option):
+        #データの種類を示すため。データが失敗通知か証明書かをコンテンツのmsg_orgを使って識別したいから。
+        #これはInterestのmsg_orgとは別物。
+        handle.send_data(name,message,0,msg_org=option)
+    else:
+        handle.send_data(name,message,0)
 
 def receive_interest(handle):
     handle.register("ccnx:/BC")
@@ -216,11 +221,11 @@ def get_key(Nodename,key_type):
 
 def signature_check(info,signature,pk):
     #フォーマットを固定してutf-8ストリング化
-    block_info_string = json.dumps(info, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    info_string = json.dumps(info, sort_keys=True, separators=(",", ":")).encode("utf-8")
     #Hex形式の署名を検証可能なバイト列形式に変換
     sig_bytes = bytes.fromhex(signature)
     try:
-        pk.verify(sig_bytes,block_info_string)
+        pk.verify(sig_bytes,info_string)
         return True
     except:
         return False
@@ -310,7 +315,7 @@ def process_request(handle,interest):
                 cert = Cert(transaction.namespace,transaction.pubkey,"ccnx:/BC/key/BCNode1")
                 cert.sign(sk)
                 cert_json = cert.to_json()
-                datasend(handle,interest.name,cert_json)
+                datasend(handle,interest.name,cert_json,"Cert")
             else:
                 datasend(handle,interest.name,"Fail : Block Voting Failed")
 

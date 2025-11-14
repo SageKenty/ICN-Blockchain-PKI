@@ -127,13 +127,14 @@ def main():
         result = request_and_receive(handle,"ccnx:/BC/Register",register_request_json)
         print(result)
         #リクエストに成功したら
+        print(f"result.msg_org:{result.msg_org}")
         if(result.msg_org.decode('utf-8') == "Cert"):
-            print(cert_json)
             cert_json = bytes_to_json(result.payload)
             cert = Cert(**cert_json)
-            
-        
-        #失敗したらエラーにする。
+            print(f"Cert:{cert_json}")
+            print(cert)
+
+        ##失敗したらエラーにする。
         else:
             raise Exception("Request Rejected")
 

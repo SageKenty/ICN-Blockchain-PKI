@@ -21,11 +21,16 @@ def request_and_receive(handle,name,message = None):
             print(info)
             return info
 
-def datasend(handle,name,message):
+def datasend(handle,name,message,option = None):
     print(message)
     if isinstance(message,dict):
         message = json.dumps(message).encode("utf-8")
-    handle.send_data(name,message,0)
+    if(option):
+        #データの種類を示すため。データが失敗通知か証明書かをコンテンツのmsg_orgを使って識別したいから。
+        #これはInterestのmsg_orgとは別物。
+        handle.send_data(name,message,0,msg_org=option)
+    else:
+        handle.send_data(name,message,0)
 
 def receive_interest(handle):
     handle.register("ccnx:/BC/Register")
@@ -52,7 +57,8 @@ def main():
             # リクエストを送信し、結果を待つ
             info = request_and_receive(handle,broadcast_name,interest.msg_org)
             # 得られた結果を転送する。
-            datasend(handle,interest.name,info.payload)
+            print(info.msg_org)
+            datasend(handle,interest.name,info.payload,info.msg_org)
 
 # ファイルが直接実行されたらこれを呼び出す。
 if __name__ == "__main__":

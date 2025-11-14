@@ -272,6 +272,8 @@ def create_block(transaction,sk):
     #ブロックインスタンス生成。
     #ハッシュ値はインスタンス生成時に自動生成。
     block = Block(index,timestamp,transaction,previous_hash)
+    #テスト用に改変してみる
+    #block.hash = "aaaa"
     #block.sign(seqlet key)
     block.sign(sk)
 
