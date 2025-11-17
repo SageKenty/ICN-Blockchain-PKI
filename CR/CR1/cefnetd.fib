@@ -1,0 +1,8 @@
+#最初をccnx:/で始めないとエラーになる。
+#CRの設定の際"ccnx:/"までが必須条件
+#Content関係のリクエストはProducerへ
+ccnx:/Content udp 10.200.0.2
+ccnx:/ContentCert udp 10.200.0.2
+
+#BC関係のリクエストはGatewayノードへ
+ccnx:/BC udp 10.200.0.5

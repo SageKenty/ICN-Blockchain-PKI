@@ -1,3 +1,4 @@
 #最初をccnxで始めないとエラーになる。
 #ccnx:/test udp 10.200.0.6
-ccnx:/BC udp 10.200.0.5
+#ccnx:/BC -> CR2
+ccnx:/BC udp 10.200.0.6

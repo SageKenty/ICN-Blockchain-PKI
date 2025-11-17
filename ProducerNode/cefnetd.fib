@@ -1,6 +1,2 @@
-#最初をccnxで始めないとエラーになる。
-#ccnx:/test udp 10.200.0.6
-# BCNode1に直接送信(テスト用)
-#ccnx:/BC udp 10.200.0.6
-# Gatewayノードに送信
-ccnx:/BC udp 10.200.0.4
+#全てのリクエストをCR1に委託
+ccnx:/ udp 10.200.0.4

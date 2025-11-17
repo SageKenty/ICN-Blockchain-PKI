@@ -62,6 +62,42 @@ services: #動作させるアプリケーション単位
       defaultnetwork:
         ipv4_address: 10.200.0.2
 
+  #ClientNode: #ノードの名前。このコンテナに入りますよ。
+  #  build: 
+  #    #この中にあるdockerfileを使って作りますよ。
+  #    context: .
+  #    dockerfile: ./ClientNode/Dockerfile
+  #  image: client-image
+  #  # コンテナの名前を指定
+  #  container_name:  client-container
+  #  #コンソールで入れるようにする
+  #  stdin_open: true
+  #  tty: true
+  #  #ホストの中でのファイルが、docker内のここに反映される。
+  #  volumes:
+  #    - ./ClientNode:/root/opt/home/sekigawa/client
+  #  networks:
+  #    defaultnetwork:
+  #      ipv4_address: 10.200.0.3
+  
+  CR1: #ノードの名前。このコンテナに入りますよ。
+    build: 
+      #この中にあるdockerfileを使って作りますよ。
+      context: .
+      dockerfile: ./CR/CR1/Dockerfile
+    image: cr1-image
+    # コンテナの名前を指定
+    container_name:  cr1-container
+    #コンソールで入れるようにす
+    stdin_open: true
+    tty: true
+    #ホストの中でのファイルが、docker内のここに反映される。
+    volumes:
+      - ./CR/CR1:/root/opt/home/sekigawa/CR/cr1
+    networks:
+      defaultnetwork:
+        ipv4_address: 10.200.0.4
+
   GatewayNode: #ノードの名前。このコンテナに入りますよ。
     build: 
       #この中にあるdockerfileを使って作りますよ。
@@ -78,7 +114,7 @@ services: #動作させるアプリケーション単位
       - ./GatewayNode:/root/opt/home/sekigawa/gateway
     networks:
       defaultnetwork:
-        ipv4_address: 10.200.0.4
+        ipv4_address: 10.200.0.5
 
   CR2: #ノードの名前。このコンテナに入りますよ。
     build: 
@@ -96,7 +132,7 @@ services: #動作させるアプリケーション単位
       - ./CR/CR2:/root/opt/home/sekigawa/CR/cr2
     networks:
       defaultnetwork:
-        ipv4_address: 10.200.0.5
+        ipv4_address: 10.200.0.6
 
   BCNode1: #ノードの名前。このコンテナに入りますよ。
     build: 
@@ -115,7 +151,7 @@ services: #動作させるアプリケーション単位
       - ./BCNode/BCNode1:/root/opt/home/sekigawa/BCNode/bcnode1
     networks:
       defaultnetwork:
-        ipv4_address: 10.200.0.6
+        ipv4_address: 10.200.0.7
 
   BCNode2: #ノードの名前。このコンテナに入りますよ。
     build: 
@@ -133,7 +169,7 @@ services: #動作させるアプリケーション単位
       - ./BCNode/BCNode2:/root/opt/home/sekigawa/BCNode/bcnode2
     networks:
       defaultnetwork:
-        ipv4_address: 10.200.0.7
+        ipv4_address: 10.200.0.8
   
   BCNode3: #ノードの名前。このコンテナに入りますよ。
     build: 
@@ -151,7 +187,9 @@ services: #動作させるアプリケーション単位
       - ./BCNode/BCNode3:/root/opt/home/sekigawa/BCNode/bcnode3
     networks:
       defaultnetwork:
-        ipv4_address: 10.200.0.8
+        ipv4_address: 10.200.0.9
+  
+  
 
 #ハード側のネットワーク
 networks:

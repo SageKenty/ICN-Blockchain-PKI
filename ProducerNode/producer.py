@@ -46,10 +46,10 @@ class RegisterRequest:
 
 # 送信用データを表すクラス
 class Content:
-    def __init__(content_data):
-        content_data = None
-        keylocator = None
-        signature = None
+    def __init__(self,content_data):
+        self.content_data = content_data
+        self.keylocator = None
+        self.signature = None
     
     def sign(self,sk):
         content_info = {
@@ -63,7 +63,7 @@ class Content:
 
     def to_json(self):
         return{
-            "data":self.data,
+            "data":self.content_data,
             "keylocator":self.keylocator,
             "signature":self.signature
         }
@@ -99,7 +99,7 @@ def request_and_receive(handle,name,message = None):
 
 #Interest受信
 def receive_interest(handle):
-    handle.register("ccnx:/BC")
+    handle.register("ccnx:/")
     while True:
         info = handle.receive() 
         if info.is_succeeded:
@@ -146,9 +146,7 @@ def request_register(handle,namespace,content_pk,content_sk):
         print(f"result.msg_org:{result.msg_org}")
         if(result.msg_org.decode('utf-8') == "Cert"):
             cert_json = bytes_to_json(result.payload)
-            cert = Cert(**cert_json)
-            print(f"Cert:{cert_json}")
-            return cert
+            return cert_json
 
         ##失敗したらエラーにする。
         else:
@@ -158,8 +156,8 @@ def request_register(handle,namespace,content_pk,content_sk):
 def process_client(handle,content,cert):
     
     #ここではcontent,certはjsonとして渡されている
-
-    print("process_client")
+    print("process_client called\n")
+    print("waiting for Interest...")
     interest = receive_interest(handle)
     parts = interest.name.split("/")
     if parts[2] == "Content":
@@ -187,8 +185,8 @@ def main():
             format=serialization.PublicFormat.Raw
         )
 
-        #登録をリクエスト,証明書取得
-        cert = request_register(handle,namespace,content_pk,content_sk)
+        #登録をリクエスト,証明書取得.
+        cert_json = request_register(handle,namespace,content_pk,content_sk)
         
         #証明書の場所を記録する
         content.keylocator = "ccnx:/ContentCert/1"
@@ -197,7 +195,6 @@ def main():
 
         #contentと証明書をjson化
         content_json = content.to_json()
-        cert_json = cert.to_json()
 
         while True:
             #リクエストを受け付ける
