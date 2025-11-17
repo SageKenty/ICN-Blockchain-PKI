@@ -13,7 +13,7 @@ import os
 
 #---グローバル変数---#
 cert = None #証明書
-
+bckeylist = [] #BCノードの公開鍵リスト
 
 #---Data Structures---#
 
@@ -82,6 +82,7 @@ def bytes_to_json(bytes):
     jsondata = json.loads(str)
 
     return jsondata
+
 ##--------実動作部分--------##
 
 def main():
@@ -90,6 +91,8 @@ def main():
         content_json = bytes_to_json(content.payload)
         print("Received Content:")
         print(content_json)
+        
+        
 
 # ファイルが直接実行されたらこれを呼び出す。
 if __name__ == "__main__":
