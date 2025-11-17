@@ -8,8 +8,15 @@ import cefpyco
 import json
 # タイムスタンプ,小待機用
 import time
+# os関連。モックデータ作成用にurandomを使用したいから。別用途にも利用する可能性あり
+import os
+
+#---グローバル変数---#
+cert = None #証明書
+
 
 #---Data Structures---#
+
 # 登録リクエストを表すクラス。
 class RegisterRequest:
     def __init__(self,namespace,pubkey):
@@ -39,7 +46,7 @@ class RegisterRequest:
 
 # 送信用データを表すクラス
 class Content:
-    def __init__(content_data,keylocator):
+    def __init__(content_data):
         content_data = None
         keylocator = None
         signature = None
@@ -76,10 +83,10 @@ class Cert:
             "bcsig":self.bcsig.hex()
         }
 
+##-----関数-----##
 
 # 送受信関数
 def request_and_receive(handle,name,message = None):
-    # インスタンスを定義
     print(f"Send Interest \n name: {name}:\n message:{message} \n")
     handle.send_interest(name,0,msg_org = json.dumps(message).encode("utf-8"))
     while True:
@@ -90,6 +97,28 @@ def request_and_receive(handle,name,message = None):
             print(info)
             return info
 
+#Interest受信
+def receive_interest(handle):
+    handle.register("ccnx:/BC")
+    while True:
+        info = handle.receive() 
+        if info.is_succeeded:
+            print("")
+            print(f"Receive Interest :\n Name:{info.name}\n msg_org:{info.msg_org}\n")
+            return info
+            #handle.send_data("ccnx:/request", f"msgorg:{info.msg_org} \n",0)
+
+#データ送信
+def datasend(handle,name,message,option = None):
+    print(message)
+    if isinstance(message,dict):
+        message = json.dumps(message).encode("utf-8")
+    if(option):
+        #データの種類を示すため。データが失敗通知か証明書かをコンテンツのmsg_orgを使って識別したいから。
+        #これはInterestのmsg_orgとは別物。
+        handle.send_data(name,message,0,msg_org=option)
+    else:
+        handle.send_data(name,message,0)
 
 # データフォーマット
 
@@ -102,20 +131,8 @@ def bytes_to_json(bytes):
     return jsondata
 ##--------実動作部分--------##
 
-def main():
-    with cefpyco.create_handle() as handle:
-        #　名前空間情報
-        namespace = "ccnx:/t"
-        #----鍵情報生成----#
-        # 鍵ペア生成
-        content_sk = ed25519.Ed25519PrivateKey.generate()
-        #pkはraw形式で生成。(Interest容量節約のため　Raw形式)
-        content_pk = content_sk.public_key().public_bytes(
-            encoding=serialization.Encoding.Raw,
-            format=serialization.PublicFormat.Raw
-        )
-
-        #登録リクエストの生成
+def request_register(handle,namespace,content_pk,content_sk):
+    #登録リクエストの生成
         register_request = RegisterRequest(namespace,content_pk)
 
         ###----署名生成----###
@@ -125,20 +142,66 @@ def main():
         register_request_json = register_request.to_json()
         #登録リクエスト送信。
         result = request_and_receive(handle,"ccnx:/BC/Register",register_request_json)
-        print(result)
         #リクエストに成功したら
         print(f"result.msg_org:{result.msg_org}")
         if(result.msg_org.decode('utf-8') == "Cert"):
             cert_json = bytes_to_json(result.payload)
             cert = Cert(**cert_json)
             print(f"Cert:{cert_json}")
-            print(cert)
+            return cert
 
         ##失敗したらエラーにする。
         else:
+            print(result.payload)
             raise Exception("Request Rejected")
 
+def process_client(handle,content,cert):
+    
+    #ここではcontent,certはjsonとして渡されている
 
+    print("process_client")
+    interest = receive_interest(handle)
+    parts = interest.name.split("/")
+    if parts[2] == "Content":
+        datasend(handle,interest.name,content)
+    elif parts[2] == "ContentCert":
+        datasend(handle,interest.name,cert)
+    else:
+        datasend(handle,interest.name,"Invalid Request")
+    
+def main():
+    with cefpyco.create_handle() as handle:
+        #　名前空間情報
+        namespace = "ccnx:/Content/1"
+        #コンテンツデータ(1KBのバイト列を生成し、2KBのhexdigestにしてJSONで扱えるように。)
+        content_data = os.urandom(1024).hex()
+        #Contentインスタンス生成
+        content = Content(content_data)
+
+        #----鍵情報生成----#
+        # 鍵ペア生成
+        content_sk = ed25519.Ed25519PrivateKey.generate()
+        #pkはraw形式で生成。(Interest容量節約のため　Raw形式)
+        content_pk = content_sk.public_key().public_bytes(
+            encoding=serialization.Encoding.Raw,
+            format=serialization.PublicFormat.Raw
+        )
+
+        #登録をリクエスト,証明書取得
+        cert = request_register(handle,namespace,content_pk,content_sk)
+        
+        #証明書の場所を記録する
+        content.keylocator = "ccnx:/ContentCert/1"
+        #contentに署名
+        content.sign(content_sk)
+
+        #contentと証明書をjson化
+        content_json = content.to_json()
+        cert_json = cert.to_json()
+
+        while True:
+            #リクエストを受け付ける
+            process_client(handle,content_json,cert_json)
 
 # ファイルが直接実行されたらこれを呼び出す。
 if __name__ == "__main__":
