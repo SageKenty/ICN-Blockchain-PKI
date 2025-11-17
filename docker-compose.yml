@@ -62,23 +62,23 @@ services: #動作させるアプリケーション単位
       defaultnetwork:
         ipv4_address: 10.200.0.2
 
-  #ClientNode: #ノードの名前。このコンテナに入りますよ。
-  #  build: 
-  #    #この中にあるdockerfileを使って作りますよ。
-  #    context: .
-  #    dockerfile: ./ClientNode/Dockerfile
-  #  image: client-image
-  #  # コンテナの名前を指定
-  #  container_name:  client-container
-  #  #コンソールで入れるようにする
-  #  stdin_open: true
-  #  tty: true
-  #  #ホストの中でのファイルが、docker内のここに反映される。
-  #  volumes:
-  #    - ./ClientNode:/root/opt/home/sekigawa/client
-  #  networks:
-  #    defaultnetwork:
-  #      ipv4_address: 10.200.0.3
+  ClientNode: #ノードの名前。このコンテナに入りますよ。
+    build: 
+      #この中にあるdockerfileを使って作りますよ。
+      context: .
+      dockerfile: ./ClientNode/Dockerfile
+    image: client-image
+    # コンテナの名前を指定
+    container_name:  client-container
+    #コンソールで入れるようにする
+    stdin_open: true
+    tty: true
+    #ホストの中でのファイルが、docker内のここに反映される。
+    volumes:
+      - ./ClientNode:/root/opt/home/sekigawa/client
+    networks:
+      defaultnetwork:
+        ipv4_address: 10.200.0.3
   
   CR1: #ノードの名前。このコンテナに入りますよ。
     build: 

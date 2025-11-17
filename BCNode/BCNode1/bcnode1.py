@@ -194,7 +194,6 @@ def receive_interest(handle):
     while True:
         info = handle.receive() 
         if info.is_succeeded:
-            print("")
             print(f"Receive Interest :\n Name:{info.name}\n msg_org:{info.msg_org}\n")
             return info
             #handle.send_data("ccnx:/request", f"msgorg:{info.msg_org} \n",0)

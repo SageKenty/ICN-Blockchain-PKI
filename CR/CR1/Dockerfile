@@ -10,7 +10,6 @@ RUN apt-get install -y \
 # ソース配置
 WORKDIR /cefore
 COPY ./cefore  /cefore/cefore
-COPY ./cefpyco /cefore/cefpyco
 
 # cefore のビルド
 WORKDIR /cefore/cefore

@@ -65,7 +65,7 @@ class Content:
         return{
             "data":self.content_data,
             "keylocator":self.keylocator,
-            "signature":self.signature
+            "signature":self.signature.hex()
         }
 
 class Cert:
@@ -99,14 +99,14 @@ def request_and_receive(handle,name,message = None):
 
 #Interest受信
 def receive_interest(handle):
-    handle.register("ccnx:/")
+    handle.register("ccnx:/Content")
+    handle.register("ccnx:/Cert")
+    print("waiting for Interest...")
     while True:
         info = handle.receive() 
         if info.is_succeeded:
-            print("")
             print(f"Receive Interest :\n Name:{info.name}\n msg_org:{info.msg_org}\n")
             return info
-            #handle.send_data("ccnx:/request", f"msgorg:{info.msg_org} \n",0)
 
 #データ送信
 def datasend(handle,name,message,option = None):
@@ -154,15 +154,13 @@ def request_register(handle,namespace,content_pk,content_sk):
             raise Exception("Request Rejected")
 
 def process_client(handle,content,cert):
-    
     #ここではcontent,certはjsonとして渡されている
     print("process_client called\n")
-    print("waiting for Interest...")
     interest = receive_interest(handle)
     parts = interest.name.split("/")
-    if parts[2] == "Content":
+    if parts[1] == "Content":
         datasend(handle,interest.name,content)
-    elif parts[2] == "ContentCert":
+    elif parts[1] == "Cert":
         datasend(handle,interest.name,cert)
     else:
         datasend(handle,interest.name,"Invalid Request")
@@ -189,7 +187,7 @@ def main():
         cert_json = request_register(handle,namespace,content_pk,content_sk)
         
         #証明書の場所を記録する
-        content.keylocator = "ccnx:/ContentCert/1"
+        content.keylocator = "ccnx:/Cert/1"
         #contentに署名
         content.sign(content_sk)
 
