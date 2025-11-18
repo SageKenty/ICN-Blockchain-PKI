@@ -412,15 +412,31 @@ def process_block(handle,interest):
     else:
         datasend(handle,interest.name,"Invalid")
 
+def keysend(handle,interest,nodename):
+    print("Key Request Received\n")
+    pk = get_key(nodename,"pk")
+    pk_bytes = pk.public_bytes(
+        encoding=serialization.Encoding.Raw,
+        format=serialization.PublicFormat.Raw
+    )
+    pk_string = pk_bytes.hex()
+    datasend(handle,interest.name,pk_string,"Pubkey")
+
 def main():
     with cefpyco.create_handle() as handle:
         while True:## ----Interest 受信----##
             interest = receive_interest(handle)
+            parts = interest.name.split("/")
             ## --リクエストの処理--##
-            if("Register" in interest.name):
+            if parts[2] == "Register":
                 process_request(handle,interest)
-            elif("Block" in interest.name):
+            ## --ブロックの処理--##
+            elif parts[2] == "Block":
                 process_block(handle,interest)
+            ## --鍵要求の処理--##
+            elif parts[2] == "key":
+                keysend(handle,interest,parts[3])
+            
             print(blockchain)
 
 # ファイルが直接実行されたらこれを呼び出す。

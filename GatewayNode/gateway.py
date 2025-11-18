@@ -7,6 +7,7 @@ import json
 import random
 # タイムスタンプ,小待機用
 import time
+# sysインポート
 
 ## Cefpyco関係 ##
 def request_and_receive(handle,name,message = None):
@@ -37,7 +38,6 @@ def receive_interest(handle):
     while True:
         info = handle.receive() 
         if info.is_succeeded and info.name == "ccnx:/BC/Register":
-            print("")
             print(f"Receive Interest :\n Name:{info.name}\n msg_org:{info.msg_org}\n")
             return info
             #handle.send_data("ccnx:/request", f"msgorg:{info.msg_org} \n",0)

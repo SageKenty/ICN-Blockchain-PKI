@@ -13,26 +13,24 @@ import os
 
 #---グローバル変数---#
 cert = None #証明書
-bckeylist = [] #BCノードの公開鍵リスト
+bckeytable = {} #BCノードの公開鍵表
 
 #---Data Structures---#
 
 # 送信用データを表すクラス
 class Content:
-    def __init__(self,content_data):
-        self.content_data = content_data
-        self.keylocator = None
-        self.signature = None
-\
+    def __init__(self,data,keylocator=None,signature=None):
+        self.data = data
+        self.keylocator = keylocator
+        self.signature = signature
+
     def verify(self,pk):
         content_info = {
-            "content_data":self.content_data,
+            "data":self.data,
             "keylocator":self.keylocator
         }
-        # フォーマットを固定してutf-8ストリング化
-        content_info_string = json.dumps(content_info, sort_keys=True, separators=(",", ":")).encode("utf-8")
-        # 名前,公開鍵に署名。
-        self.signature = sk.sign(content_info_string)
+        #署名検証
+        return signature_check(content_info,self.signature,pk)
 
 class Cert:
     def __init__(self,namespace,pubkey,keylocator,bcsig=None):
@@ -40,6 +38,15 @@ class Cert:
         self.pubkey = pubkey
         self.keylocator = keylocator
         self.bcsig = bcsig
+
+    def verify(self,pk):
+        cert_info = {
+            "namespace":self.namespace,
+            "pubkey":self.pubkey,
+            "keylocator": self.keylocator
+        }
+        #署名検証
+        return signature_check(cert_info,self.bcsig,pk)
     
     def to_json(self):
         return{
@@ -87,12 +94,59 @@ def bytes_to_json(bytes):
 
 def main():
     with cefpyco.create_handle() as handle:
+        ##----コンテンツの取得----##å
         content = request_and_receive(handle,"ccnx:/Content/1")
         content_json = bytes_to_json(content.payload)
-        print("Received Content:")
-        print(content_json)
+        content = Content(**content_json)
         
+        ##----証明書の取得と検証----##
+        cert_data = request_and_receive(handle,content_json['keylocator'])
+        cert_json = bytes_to_json(cert_data.payload)
+        cert = Cert(**cert_json)
+
+        #BCノードの公開鍵を取得
+        bckeylocator = cert_json['keylocator']
+        bc_pk = bckeytable.get(bckeylocator,None)
+        if bc_pk is None:
+            # BCノード公開鍵が未登録の場合は、公開鍵をBCNodeから取得
+            print("Requesting BC Public Key...")
+            bckey_info = request_and_receive(handle,bckeylocator)
+            bckey_str = bckey_info.payload.decode('utf-8')
+
+            # 公開鍵をhex形式からバイト列形式に変換
+            bc_pk_bytes = bytes.fromhex(bckey_str)
+            # バイト列形式の公開鍵を検証可能な公開鍵オブジェクトに変換
+            bc_pk = ed25519.Ed25519PublicKey.from_public_bytes(bc_pk_bytes)
+            # 公開鍵をBCノード公開鍵表に登録
+            bckeytable[bckeylocator] = bc_pk
+            print(bckeytable)
+
+        #証明書の検証
+        print("Verifying Cert Signature...")
+        cert_valid = cert.verify(bc_pk)
+
+        if cert_valid:
+            print("Cert Signature Valid")
+        else:
+            raise Exception("Cert Signature Invalid")
         
+        #----コンテンツの検証----#
+        # コンテンツの公開鍵を証明書から取得
+        content_pk_hex = cert_json['pubkey']
+        content_pk_bytes = bytes.fromhex(content_pk_hex)
+        content_pk = ed25519.Ed25519PublicKey.from_public_bytes(content_pk_bytes)
+        print("Verifying Content Signature...")
+
+        # コンテンツの署名を検証
+        content_valid = content.verify(content_pk)
+    
+        if content_valid:
+            print("Content Signature Valid")
+        else:
+            raise Exception("Content Signature Invalid")
+
+        if content_valid and cert_valid:
+            print("Content is perfectly valid and trusted!")
 
 # ファイルが直接実行されたらこれを呼び出す。
 if __name__ == "__main__":

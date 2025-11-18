@@ -3,9 +3,12 @@
 
 ccnx:/BC/Block/BCNode1 udp 10.200.0.7
 ccnx:/BC/Register/BCNode1 udp 10.200.0.7
+ccnx:/BC/key/BCNode1 udp 10.200.0.7
 
 ccnx:/BC/Block/BCNode2 udp 10.200.0.8
 ccnx:/BC/Register/BCNode2 udp 10.200.0.8
+ccnx:/BC/key/BCNode2 udp 10.200.0.8
 
 ccnx:/BC/Block/BCNode3 udp 10.200.0.9
 ccnx:/BC/Register/BCNode3 udp 10.200.0.9
+ccnx:/BC/key/BCNode3 udp 10.200.0.9

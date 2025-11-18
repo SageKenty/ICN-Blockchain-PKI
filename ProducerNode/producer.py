@@ -46,14 +46,14 @@ class RegisterRequest:
 
 # 送信用データを表すクラス
 class Content:
-    def __init__(self,content_data):
-        self.content_data = content_data
-        self.keylocator = None
-        self.signature = None
+    def __init__(self,data,keylocator=None,signature=None):
+        self.data = data
+        self.keylocator = keylocator
+        self.signature = signature
     
     def sign(self,sk):
         content_info = {
-            "content_data":self.content_data,
+            "data":self.data,
             "keylocator":self.keylocator
         }
         # フォーマットを固定してutf-8ストリング化
@@ -63,7 +63,7 @@ class Content:
 
     def to_json(self):
         return{
-            "data":self.content_data,
+            "data":self.data,
             "keylocator":self.keylocator,
             "signature":self.signature.hex()
         }
@@ -185,12 +185,10 @@ def main():
 
         #登録をリクエスト,証明書取得.
         cert_json = request_register(handle,namespace,content_pk,content_sk)
-        
         #証明書の場所を記録する
         content.keylocator = "ccnx:/Cert/1"
         #contentに署名
         content.sign(content_sk)
-
         #contentと証明書をjson化
         content_json = content.to_json()
 
