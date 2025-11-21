@@ -6,7 +6,7 @@ RUN apt-get update
 RUN apt-get install -y \
     build-essential libssl-dev automake cmake pkg-config \
     python3 python3-pip \
-    iputils-ping net-tools ifstat
+    iputils-ping net-tools ifstat tcpdump
 
 # Pythonツール
 RUN pip3 install --upgrade pip
@@ -40,6 +40,15 @@ RUN ldconfig
 ENV USER=root
 # buildコンテキストの初めはPKI直下。
 COPY ./BCNode/BCNode1/cefnetd.fib /usr/local/cefore/cefnetd.fib
+COPY ./BCNode/BCNode1/cefnetd.conf /usr/local/cefore/cefnetd.conf
 # ENTRYPOINTーコンテナが起動した時のコマンド。今回は　cefnetd(cefore)を起動し、コンテナを終了させないためにtailコマンドでバックグラウンドで動かし続ける
-ENTRYPOINT ["bash", "-c","cefnetdstart && tail -f /dev/null"]
+RUN mkdir -p /logs
+#ディレクトリ移動
 WORKDIR /root/opt/home/sekigawa/BCNode/bcnode1
+# ENTRYPOINT を差し替え
+ENTRYPOINT ["bash", "-lc", "\
+  cefnetdstart; \
+  mkdir -p /logs; \
+  tcpdump -i eth0 -nn -s0 -w ./bcnode1.pcap & \
+  exec tail -f /dev/null \
+"]

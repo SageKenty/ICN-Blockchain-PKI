@@ -41,8 +41,16 @@ ENV USER = root
 # FIB を配置
 COPY ./BCNode/BCNode2/cefnetd.fib /usr/local/cefore/cefnetd.fib
 
-# 起動（cefnetd を上げて待機）
-ENTRYPOINT ["bash","-c","cefnetdstart && tail -f /dev/null"]
+COPY ./BCNode/BCNode2/cefnetd.conf /usr/local/cefore/cefnetd.conf
+# ENTRYPOINTーコンテナが起動した時のコマンド。今回は　cefnetd(cefore)を起動し、コンテナを終了させないためにtailコマンドでバックグラウンドで動かし続ける
+RUN mkdir -p /logs
+# ENTRYPOINT を差し替え
+ENTRYPOINT ["bash", "-lc", "\
+  cefnetdstart; \
+  mkdir -p /logs; \
+  tcpdump -i eth0 -nn -s0 -w ./bcnode1.pcap & \
+  exec tail -f /dev/null \
+"]
 
 # 作業ディレクトリ
 WORKDIR /root/opt/home/sekigawa/BCNode/bcnode2

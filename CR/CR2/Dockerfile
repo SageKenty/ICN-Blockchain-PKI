@@ -24,8 +24,11 @@ ENV USER=root
 # FIB を配置
 COPY ./CR/CR2/cefnetd.fib /usr/local/cefore/cefnetd.fib
 
-# 起動（cefnetd を上げて待機）
-ENTRYPOINT ["bash","-c","cefnetdstart && tail -f /dev/null"]
+# Confを配置
+COPY ./CR/CR2/cefnetd.conf /usr/local/cefore/cefnetd.conf
+# ログを取りつつ実行
+RUN mkdir -p /logs
+ENTRYPOINT ["bash", "-c", "cefnetdstart 2>&1 | tee -a /logs/cefnetd_cr2.log"]
 
 # 作業ディレクトリ
 WORKDIR /root/opt/home/sekigawa/CR/cr2

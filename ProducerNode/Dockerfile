@@ -40,6 +40,9 @@ RUN ldconfig
 ENV USER=root
 # buildコンテキストの初めはPKI直下。
 COPY ./ProducerNode/cefnetd.fib /usr/local/cefore/cefnetd.fib
-# ENTRYPOINTーコンテナが起動した時のコマンド。今回は　cefnetd(cefore)を起動し、コンテナを終了させないためにtailコマンドでバックグラウンドで動かし続ける
-ENTRYPOINT ["bash", "-c","cefnetdstart && tail -f /dev/null"]
+# Confを配置
+COPY ./ProducerNode/cefnetd.conf /usr/local/cefore/cefnetd.conf
+# ログを取りつつ実行
+RUN mkdir -p /logs
+ENTRYPOINT ["bash", "-c", "cefnetdstart 2>&1 | tee -a /logs/cefnetd_producer.log"]
 WORKDIR /root/opt/home/sekigawa/producer
