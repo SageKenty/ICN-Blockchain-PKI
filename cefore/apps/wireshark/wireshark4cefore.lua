@@ -1,6 +1,6 @@
 
 -- CCN protocol
-p_ccn = Proto("ccn", "Content Centric Networking (CCN)")
+p_ccn = Proto("ccn", "Content Centric Networking (CCN-Kento)")
 
 -- CCN Protocol Field define
 f_ccn = p_ccn.fields
@@ -1583,24 +1583,80 @@ switch_MessageTLV[0x0FFF] = function(block, msginfo, msgroot, pInfo)
 
    treeInfo:add(blk_epn, string.format("IANA Private Enterprise Numbers(0x%06x)", epn))
 
-   while valueLeft > 0 do
+      while valueLeft > 0 do
       local subTLVs = getNictOrgBlock(block.tvb, offset)
--- print (string.format("#%d T_ORG@Message: type(0x%04x) Length=%d valueLeft=%d", pInfo.number, subTLVs.type, subTLVs.size, valueLeft))
 
+      -- TLV が取れなかったら終了
       if (subTLVs == nil or subTLVs.size == nil) then
-         -- no valid tlv found
          break
       end
 
-      if ( switch_NictVenderTLV[subTLVs.type] ) then
-          subTLVs.root = switch_NictVenderTLV[subTLVs.type](subTLVs, treeInfo, pInfo)
-      else
-          -- no valid tlv found
-          local value = subTLVs.tvb(subTLVs.offset + subTLVs.typeLen + subTLVs.lengthLen, subTLVs.length)
-          treeInfo:add(subTLVs.tvb(subTLVs.offset, subTLVs.size),
-                 string.format("T_X(0x%04x) Length:%d Value:", subTLVs.type, subTLVs.length) .. value)
+      -- 残りサイズより subTLV の方が大きい / サイズがおかしい → これ以上読むと危険なので終了
+      if valueLeft < subTLVs.size or subTLVs.size <= 0 then
+         break
       end
 
+      local handler = switch_NictVenderTLV[subTLVs.type]
+
+      if handler then
+         -- 既知のベンダ TLV は専用ハンドラに任せる
+         subTLVs.root = handler(subTLVs, treeInfo, pInfo)
+
+      elseif (0x0500 <= subTLVs.type and subTLVs.type <= 0x05FF) then
+         -- T_HW_FLAGS(0x05xx) の特別扱い
+         subTLVs.root = switch_NictVenderTLV[0x05FF](subTLVs, treeInfo, pInfo)
+
+      else
+         -- 未知 / 想定外 TLV：落ちないこと最優先で生バイトを表示する
+         local tvb     = subTLVs.tvb
+         local tvb_len = tvb:len()
+
+         -- value 部分の開始位置
+         local value_off = subTLVs.offset + subTLVs.typeLen + subTLVs.lengthLen
+
+         -- 残りバイト数（マイナスなら 0 に丸める）
+         local remaining = tvb_len - value_off
+         if remaining < 0 then
+            remaining = 0
+         end
+
+         -- 宣言上の length と実際に残っている長さの小さい方を使う
+         local decl_len = subTLVs.length or 0
+         local safe_len = decl_len
+         if safe_len > remaining then
+            safe_len = remaining
+         end
+         if safe_len < 0 then
+            safe_len = 0
+         end
+
+         -- ヘッダ全体 (type+length+value) も、はみ出さないように丸める
+         local hdr_remaining = tvb_len - subTLVs.offset
+         local hdr_len = subTLVs.size or hdr_remaining
+         if hdr_len > hdr_remaining then
+            hdr_len = hdr_remaining
+         end
+         if hdr_len < 0 then
+            hdr_len = 0
+         end
+
+         local hdr_range   = tvb(subTLVs.offset, hdr_len)
+         local value_range = tvb(value_off, safe_len)
+
+         local node = treeInfo:add(
+            hdr_range,
+            string.format(
+               "T_X(0x%04x) DeclaredLen:%d UsedLen:%d",
+               subTLVs.type, decl_len, safe_len
+            )
+         )
+
+         if safe_len > 0 then
+            node:add(value_range, "Raw value bytes")
+         end
+      end
+
+      -- msg_org 内の残り長さを更新
       valueLeft = valueLeft - subTLVs.size
       offset    = offset    + subTLVs.size
    end
