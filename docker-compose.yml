@@ -51,13 +51,15 @@ services: #動作させるアプリケーション単位
       dockerfile: ./ProducerNode/Dockerfile
     image: producer-image
     # コンテナの名前を指定
-    container_name:  producer-container
+    container_name:  producer
+    hostname: producer
     #コンソールで入れるようにする
     stdin_open: true
     tty: true
     #ホストの中でのファイルが、docker内のここに反映される。
     volumes:
-      - ./ProducerNode:/root/opt/home/sekigawa/producer
+      - ./ProducerNode:/root/opt/home/sekigawa/ProducerNode
+      
     networks:
       defaultnetwork:
         ipv4_address: 10.200.0.2
@@ -69,13 +71,15 @@ services: #動作させるアプリケーション単位
       dockerfile: ./ClientNode/Dockerfile
     image: client-image
     # コンテナの名前を指定
-    container_name:  client-container
+    container_name:  client
+    hostname: client
     #コンソールで入れるようにする
     stdin_open: true
     tty: true
     #ホストの中でのファイルが、docker内のここに反映される。
     volumes:
-      - ./ClientNode:/root/opt/home/sekigawa/client
+      - ./ClientNode:/root/opt/home/sekigawa/ClientNode
+      
     networks:
       defaultnetwork:
         ipv4_address: 10.200.0.3
@@ -87,13 +91,14 @@ services: #動作させるアプリケーション単位
       dockerfile: ./CR/CR1/Dockerfile
     image: cr1-image
     # コンテナの名前を指定
-    container_name:  cr1-container
-    #コンソールで入れるようにす
+    container_name:  cr1
+    hostname: cr1
     stdin_open: true
     tty: true
     #ホストの中でのファイルが、docker内のここに反映される。
     volumes:
-      - ./CR/CR1:/root/opt/home/sekigawa/CR/cr1
+      - ./CR/CR1:/root/opt/home/sekigawa/CR/CR1
+      
     networks:
       defaultnetwork:
         ipv4_address: 10.200.0.4
@@ -105,13 +110,15 @@ services: #動作させるアプリケーション単位
       dockerfile: ./GatewayNode/Dockerfile
     image: gateway-image
     # コンテナの名前を指定
-    container_name:  gateway-container
+    container_name:  gateway
+    hostname: gateway
     #コンソールで入れるようにする
     stdin_open: true
     tty: true
     #ホストの中でのファイルが、docker内のここに反映される。
     volumes:
-      - ./GatewayNode:/root/opt/home/sekigawa/gateway
+      - ./GatewayNode:/root/opt/home/sekigawa/GatewayNode
+      
     networks:
       defaultnetwork:
         ipv4_address: 10.200.0.5
@@ -123,13 +130,15 @@ services: #動作させるアプリケーション単位
       dockerfile: ./CR/CR2/Dockerfile
     image: cr2-image
     # コンテナの名前を指定
-    container_name:  cr2-container
+    container_name:  cr2
+    hostname: cr2
     #コンソールで入れるようにする
     stdin_open: true
     tty: true
     #ホストの中でのファイルが、docker内のここに反映される。
     volumes:
-      - ./CR/CR2:/root/opt/home/sekigawa/CR/cr2
+      - ./CR/CR2:/root/opt/home/sekigawa/CR/CR2
+      
     networks:
       defaultnetwork:
         ipv4_address: 10.200.0.6
@@ -142,13 +151,14 @@ services: #動作させるアプリケーション単位
     image: bcnode1-image
 
     # コンテナの名前を指定
-    container_name:  bcnode1-container
+    container_name:  bcnode1
+    hostname: bcnode1
     #コンソールで入れるようにする
     stdin_open: true
     tty: true
     #ホストの中でのファイルが、docker内のここに反映される。
     volumes:
-      - ./BCNode/BCNode1:/root/opt/home/sekigawa/BCNode/bcnode1
+      - ./BCNode/BCNode1:/root/opt/home/sekigawa/BCNode/BCNode1
     networks:
       defaultnetwork:
         ipv4_address: 10.200.0.7
@@ -160,13 +170,14 @@ services: #動作させるアプリケーション単位
       dockerfile: ./BCNode/BCNode2/Dockerfile
     image: bcnode2-image
     # コンテナの名前を指定
-    container_name:  bcnode2-container
+    container_name:  bcnode2
+    hostname: bcnode2
     #コンソールで入れるようにする
     stdin_open: true
     tty: true
     #ホストの中でのファイルが、docker内のここに反映される。
     volumes:
-      - ./BCNode/BCNode2:/root/opt/home/sekigawa/BCNode/bcnode2
+      - ./BCNode/BCNode2:/root/opt/home/sekigawa/BCNode/BCNode2
     networks:
       defaultnetwork:
         ipv4_address: 10.200.0.8
@@ -178,13 +189,15 @@ services: #動作させるアプリケーション単位
       dockerfile: ./BCNode/BCNode3/Dockerfile
     image: bcnode3-image
     # コンテナの名前を指定
-    container_name:  bcnode3-container
+    container_name:  bcnode3
+    hostname: bcnode3
     #コンソールで入れるようにする
     stdin_open: true
     tty: true
     #ホストの中でのファイルが、docker内のここに反映される。
     volumes:
-      - ./BCNode/BCNode3:/root/opt/home/sekigawa/BCNode/bcnode3
+      - ./BCNode/BCNode3:/root/opt/home/sekigawa/BCNode/BCNode3
+      
     networks:
       defaultnetwork:
         ipv4_address: 10.200.0.9
