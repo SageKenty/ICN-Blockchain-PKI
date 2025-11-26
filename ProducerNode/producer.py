@@ -19,16 +19,16 @@ cert = None #証明書
 
 # 登録リクエストを表すクラス。
 class RegisterRequest:
-    def __init__(self,namespace,pubkey):
+    def __init__(self,namespace,pubkey,signature=None):
         self.namespace = namespace
         self.pubkey = pubkey
-        self.signature = None
+        self.signature = signature
     
     def sign(self,sk):
         #署名対象データを作成。
         request_info = {
             "namespace":self.namespace,
-            "pubkey":self.pubkey.hex()
+            "pubkey": self.pubkey.hex() if isinstance(self.pubkey, bytes) else self.pubkey
         }
         # フォーマットを固定してutf-8ストリング化
         request_info_string = json.dumps(request_info, sort_keys=True, separators=(",", ":")).encode("utf-8")
@@ -39,9 +39,9 @@ class RegisterRequest:
         return {
             # ← コロンはここ！
             "namespace": self.namespace,
-            # jsonのためにHex文字形式で送信
-            "pubkey": self.pubkey.hex(),
-            "signature": self.signature.hex()
+            # 渡されたものがbytes型ならhexに変換して返す
+            "pubkey": self.pubkey.hex() if isinstance(self.pubkey, bytes) else self.pubkey,
+            "signature": self.signature.hex() if isinstance(self.signature, bytes) else self.signature
         }
 
 # 送信用データを表すクラス
@@ -134,7 +134,6 @@ def bytes_to_json(bytes):
 def request_register(handle,namespace,content_pk,content_sk):
     #登録リクエストの生成
         register_request = RegisterRequest(namespace,content_pk)
-
         ###----署名生成----###
         register_request.sign(content_sk)
         ### ---変換---###
