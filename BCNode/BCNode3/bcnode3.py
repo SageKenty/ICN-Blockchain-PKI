@@ -337,14 +337,6 @@ def verify_block(block,bc_pk):
         print("Index Invalid")
         return False
 
-    #Blockのハッシュを検証
-    print(f"Calculated_Blockhash:\n{block.calculate_hash()}\n vs. \n BlockHash:\n{block.hash}\n")
-    if(block.calculate_hash() == block.hash):
-        print("Block Hash is Valid")
-    else:
-        print("Block Hash is Invalid")
-        return False
-    
     #タイムスタンプを検証
     now_time = time.time()
     print(f"NOW(UNIX TIME):\n{now_time} \n Block timestamp:\n{block.timestamp}\n")
@@ -375,6 +367,14 @@ def verify_block(block,bc_pk):
         print("Transaction Sign Valid")
     else:
         print("Transaction Sign Invalid")
+        return False
+    
+    #Blockのハッシュを検証
+    print(f"Calculated_Blockhash:\n{block.calculate_hash()}\n vs. \n BlockHash:\n{block.hash}\n")
+    if(block.calculate_hash() == block.hash):
+        print("Block Hash is Valid")
+    else:
+        print("Block Hash is Invalid")
         return False
     
     #ブロック署名の検証
