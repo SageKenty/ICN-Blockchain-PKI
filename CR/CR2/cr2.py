@@ -13,18 +13,19 @@ from cryptography.hazmat.primitives.asymmetric import ed25519
 from cryptography.hazmat.primitives import serialization
 import hashlib
 
-
-'''
-0:そのまま 
-[リクエスト関係]1:名前改ざん 2:不正署名 3:公開鍵改ざん
-[ブロックチェーン関係] 4:index改ざん 5:Timestamp
-'''
-
 # ---引数処理--- #
 parser = argparse.ArgumentParser()
 
-parser.add_argument("forge",nargs='?',type=int,default=0,help="Forge mode (Request: 0: no forge, 1: name forge, 2: bad signature, 3: bad pubkey \n " \
-"Block: 4: index forge)")
+parser.add_argument("forge",nargs='?',type=int,default=0,help=
+                    "Forge mode:\n"
+                    "0: No Forge\n" 
+                    "RequestForge \n" 
+                    "1: name forge, 2: bad signature, 3: bad pubkey \n"
+                    "BlockForge \n"
+                    "4: index forge, 5: timestamp forge , 6: block hash forge, 7: bad block sig \n"
+                    "TransactionForge \n"
+                    "8: transaction content forge, 9: bad transaction id, 10: bad transaction sig \n")
+
 args = parser.parse_args()
 print(f"Forge mode: {args.forge}")
 
@@ -114,6 +115,54 @@ class Block:
             "hash":self.hash,
             "bcblocksig":self.bcblocksig.hex() if isinstance(self.bcblocksig,bytes) else self.bcblocksig
         }
+    
+class Transaction: 
+    def __init__(self,namespace,pubkey,txid = None,bcsig=None):
+        self.namespace = namespace
+        self.pubkey = pubkey
+        self.txid = txid if txid else self.calculate_txid()
+        self.bcsig = bcsig
+
+    def calculate_txid(self):
+        request_info = {
+            "namespace" : self.namespace,
+            "pubkey": self.pubkey
+        }
+        # フォーマットを取り揃えてハッシュ化
+        request_info_string = json.dumps(request_info, sort_keys=True, separators=(",", ":")).encode("utf-8")
+        return hashlib.sha256(request_info_string).hexdigest()
+    
+    def sign(self,sk):
+        tx_info ={
+            "txid":self.txid,
+            "namespace" : self.namespace,
+            #こちらはそのまま文字列をJSONから取得しているため。
+            "pubkey": self.pubkey
+        }
+        # フォーマットを固定してutf-8ストリング化
+        tx_info_string = json.dumps(tx_info, sort_keys=True, separators=(",", ":")).encode("utf-8")
+        # 名前,公開鍵に署名。
+        self.bcsig = sk.sign(tx_info_string)
+    
+    def verify_sign(self,pk):
+        # 署名検証
+        tx_info ={
+            "txid":self.txid,
+            "namespace" : self.namespace,
+            #こちらはそのまま文字列をJSONから取得しているため。
+            "pubkey": self.pubkey
+        }
+        # 署名をチェック
+        return signature_check(tx_info,self.bcsig,pk)
+
+
+    def to_json(self):
+        return{
+            "txid":self.txid,
+            "namespace":self.namespace,
+            "pubkey":self.pubkey.hex() if isinstance(self.pubkey,bytes) else self.pubkey,
+            "bcsig": self.bcsig.hex() if isinstance(self.bcsig,bytes) else self.bcsig
+        }
 
 # --- 署名部分 --- #
 def signature_check(info,signature,pk):
@@ -173,6 +222,13 @@ def bytes_to_json(byte_data):
 # ---動作関係 ---#
 
 def forge_interest(interest,forge):
+    '''
+    0:そのまま 
+    [リクエスト関係]1:名前改ざん 2:不正署名 3:公開鍵改ざん
+    [ブロックチェーン関係] 4:index改ざん 5:Timestamp改ざん 6:ブロックハッシュ改ざん 7:不正ブロック署名
+    [トランザクション関係] 8:トランザクション内容改ざん 9:不正トランザクションID 10:不正トランザクション署名
+    '''
+
     # 0の時はそのまま返す。
     if not forge:
         return interest
@@ -197,7 +253,7 @@ def forge_interest(interest,forge):
         register_request = RegisterRequest(**message)
         if forge == 1:
             print("Forging name")
-            register_request.namespace = "/ccnx:/Content/FAKE"
+            register_request.namespace = "ccnx:/Content/FAKE"
         if forge == 2:
             print("Forging signature")
             register_request.sign(fake_sk)
@@ -208,13 +264,39 @@ def forge_interest(interest,forge):
         message_object = register_request
 
     if parts[2] == "Block":
+        fake_hash = hashlib.sha256(random.randbytes(100)).hexdigest()
         block = Block(**message)
+        transaction = Transaction(**block.transaction)
+    
         if forge == 4:
             print("Forge index")
             block.index = 1600
         if forge == 5:
             print("Forge Timestamp")
             block.timestamp = 9999999999
+        if forge == 6:
+            print("Forge Block Hash")
+            block.hash = fake_hash
+        if forge == 7:
+            print("Forge BCNode sig")
+            block.sign(fake_sk)
+
+        # ---トランザクション改ざん--- #
+        if forge == 8:
+            #トランザクションの内容の改ざん
+            print("Forge Transaction Contet")
+            transaction.namespace = "FAKE"
+            transaction.pubkey = fake_pk
+        if forge == 9:
+            #トランザクションIDの改ざん
+            print("Forge Transaction ID")
+            transaction.txid = fake_hash
+            
+        if forge == 10:
+            print("Forge Transaction Sig")
+            transaction.sign(fake_sk)
+        
+        block.transaction = transaction.to_json()
         message_object = block
 
     message_str = json.dumps(message_object.to_json()).encode("utf-8")
