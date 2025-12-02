@@ -29,198 +29,16 @@ parser.add_argument("forge",nargs='?',type=int,default=0,help=
 args = parser.parse_args()
 print(f"Forge mode: {args.forge}")
 
+# クラスのインポート
+from lib.libs import RegisterRequest,Block,Transaction
+
+# 関数のインポート
+from lib.libs import (receive_interest,request_and_receive,
+                      datasend,bytes_to_json)
+
 # ---データ構造--- #
-# 登録リクエストを表すクラス。
-class RegisterRequest:
-    def __init__(self,namespace,pubkey,signature=None):
-        self.namespace = namespace
-        self.pubkey = pubkey
-        self.signature = signature
-    
-    def sign(self,sk):
-        #署名対象データを作成。
-        request_info = {
-            "namespace":self.namespace,
-            "pubkey": self.pubkey.hex() if isinstance(self.pubkey, bytes) else self.pubkey
-        }
-        # フォーマットを固定してutf-8ストリング化
-        request_info_string = json.dumps(request_info, sort_keys=True, separators=(",", ":")).encode("utf-8")
-        # 名前,公開鍵に署名。
-        self.signature = sk.sign(request_info_string)
-
-    def to_json(self):
-        return {
-            # ← コロンはここ！
-            "namespace": self.namespace,
-            # 渡されたものがbytes型ならhexに変換して返す
-            "pubkey": self.pubkey.hex() if isinstance(self.pubkey, bytes) else self.pubkey,
-            "signature": self.signature.hex() if isinstance(self.signature, bytes) else self.signature
-        }
-    
-class Block:
-    def __init__(self,index,timestamp,transaction,previous_hash,hash=None,bcblocksig=None):
-        self.index = int(index)
-        self.timestamp = float(timestamp)
-        self.previous_hash = previous_hash
-        #transactionはあらかじめJSON形式で渡す。
-        self.transaction = transaction
-        #hash値が渡されていればそのまま入れる、なければ計算。
-        self.hash = hash if hash else self.calculate_hash()
-        self.bcblocksig = bcblocksig
-
-    def calculate_hash(self):
-        block_info = {
-            "index": self.index,
-            "timestamp": str(self.timestamp),
-            "transaction": self.transaction,
-            "previous_hash": self.previous_hash
-        }
-        # フォーマットを取り揃えてハッシュ化
-        block_info_string = json.dumps(block_info, sort_keys=True, separators=(",", ":")).encode("utf-8")
-        return hashlib.sha256(block_info_string).hexdigest()
-    
-    def sign(self,sk):
-        block_info = {
-            "index": self.index,
-            "timestamp": str(self.timestamp),
-            "transaction": self.transaction,
-            "previous_hash": self.previous_hash,
-            "hash":self.hash
-        }
-        print(f"sig_info:\n{block_info}\n")
-        #フォーマットを固定してutf-8ストリング化
-        block_info_string = json.dumps(block_info, sort_keys=True, separators=(",", ":")).encode("utf-8")
-        # 名前,公開鍵に署名。
-        self.bcblocksig = sk.sign(block_info_string)
-        print(f"bcblocksig:\n{self.bcblocksig.hex()}\n")
-    
-    def verify_sign(self,pk):
-        block_info = {
-            "index": self.index,
-            "timestamp": str(self.timestamp),
-            "transaction": self.transaction,
-            "previous_hash": self.previous_hash,
-            "hash":self.hash
-        }
-        #署名チェック
-        return signature_check(block_info,self.bcblocksig,pk)
-
-    
-    def to_json(self):
-        return{
-            "index": self.index,
-            "timestamp": str(self.timestamp),
-            "transaction": self.transaction,
-            "previous_hash": self.previous_hash,
-            "hash":self.hash,
-            "bcblocksig":self.bcblocksig.hex() if isinstance(self.bcblocksig,bytes) else self.bcblocksig
-        }
-    
-class Transaction: 
-    def __init__(self,namespace,pubkey,txid = None,bcsig=None):
-        self.namespace = namespace
-        self.pubkey = pubkey
-        self.txid = txid if txid else self.calculate_txid()
-        self.bcsig = bcsig
-
-    def calculate_txid(self):
-        request_info = {
-            "namespace" : self.namespace,
-            "pubkey": self.pubkey
-        }
-        # フォーマットを取り揃えてハッシュ化
-        request_info_string = json.dumps(request_info, sort_keys=True, separators=(",", ":")).encode("utf-8")
-        return hashlib.sha256(request_info_string).hexdigest()
-    
-    def sign(self,sk):
-        tx_info ={
-            "txid":self.txid,
-            "namespace" : self.namespace,
-            #こちらはそのまま文字列をJSONから取得しているため。
-            "pubkey": self.pubkey
-        }
-        # フォーマットを固定してutf-8ストリング化
-        tx_info_string = json.dumps(tx_info, sort_keys=True, separators=(",", ":")).encode("utf-8")
-        # 名前,公開鍵に署名。
-        self.bcsig = sk.sign(tx_info_string)
-    
-    def verify_sign(self,pk):
-        # 署名検証
-        tx_info ={
-            "txid":self.txid,
-            "namespace" : self.namespace,
-            #こちらはそのまま文字列をJSONから取得しているため。
-            "pubkey": self.pubkey
-        }
-        # 署名をチェック
-        return signature_check(tx_info,self.bcsig,pk)
-
-
-    def to_json(self):
-        return{
-            "txid":self.txid,
-            "namespace":self.namespace,
-            "pubkey":self.pubkey.hex() if isinstance(self.pubkey,bytes) else self.pubkey,
-            "bcsig": self.bcsig.hex() if isinstance(self.bcsig,bytes) else self.bcsig
-        }
 
 # --- 署名部分 --- #
-def signature_check(info,signature,pk):
-    #フォーマットを固定してutf-8ストリング化
-    info_string = json.dumps(info, sort_keys=True, separators=(",", ":")).encode("utf-8")
-    #Hex形式の署名を検証可能なバイト列形式に変換
-    sig_bytes = bytes.fromhex(signature)
-    try:
-        pk.verify(sig_bytes,info_string)
-        return True
-    except:
-        return False
-
-# --- 通信部分 --- #
-def receive_interest(handle,name):
-    handle.register(name)
-    while True:
-        info = handle.receive() 
-        if info.is_succeeded and info.is_interest:
-            print(f"Receive Interest :\n Name:{info.name}\n msg_org:{info.msg_org}\n")
-            return info
-            #handle.send_data("ccnx:/request", f"msgorg:{info.msg_org} \n",0)
-
-def request_and_receive(handle,interest):
-    name = interest.name
-    message = interest.msg_org
-
-    handle.send_interest(name,0,msg_org = message)
-    print(f"Send Interest \n name: {name}:\n message:{message} \n")
-    while True:
-        # ccnxにしないと失敗する。理由は不明。 
-        info = handle.receive()
-        print("waiting Data")
-        if info.is_succeeded and info.is_data:
-            print("Success")
-            print(info)
-            return info
-        
-def datasend(handle,name,message,option = None):
-    print(f"Sending This Data:Name:{name},\nMessage:{message}\nOption:{option}\n")
-    print(message)
-    if isinstance(message,dict):
-        message = json.dumps(message).encode("utf-8")
-    if(option):
-        #データの種類を示すため。データが失敗通知か証明書かをコンテンツのmsg_orgを使って識別したいから。
-        #これはInterestのmsg_orgとは別物。
-        handle.send_data(name,message,0,msg_org=option)
-    else:
-        handle.send_data(name,message,0)
-
-# データ変換関係 #
-def bytes_to_json(byte_data):
-    str_data = byte_data.decode("utf-8")
-    json_data = json.loads(str_data)
-    return json_data
-
-# ---動作関係 ---#
-
 def forge_interest(interest,forge):
     '''
     0:そのまま 
@@ -321,7 +139,7 @@ def main():
 
             for interest in interests:
                 interest = forge_interest(interest,args.forge)
-                info = request_and_receive(handle,interest)
+                info = request_and_receive(handle,interest.name,interest.msg_org)
                 true_name = info.name.replace("/forged","")
                 datasend(handle,true_name,info.payload,info.msg_org)            
             

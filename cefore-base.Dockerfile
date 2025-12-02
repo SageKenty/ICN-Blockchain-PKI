@@ -40,3 +40,6 @@ RUN ldconfig
 # ENTRYPOINTスクリプトを追加
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
+
+# 作業ディレクトリを/appに設定
+WORKDIR /app

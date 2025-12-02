@@ -58,7 +58,8 @@ services: #動作させるアプリケーション単位
     tty: true
     #ホストの中でのファイルが、docker内のここに反映される。
     volumes:
-      - ./ProducerNode:/root/opt/home/sekigawa/ProducerNode
+      - ./ProducerNode:/app
+      - ./lib:/app/lib
       
     networks:
       defaultnetwork:
@@ -78,7 +79,8 @@ services: #動作させるアプリケーション単位
     tty: true
     #ホストの中でのファイルが、docker内のここに反映される。
     volumes:
-      - ./ClientNode:/root/opt/home/sekigawa/ClientNode
+      - ./ClientNode:/app
+      - ./lib:/app/lib
       
     networks:
       defaultnetwork:
@@ -97,7 +99,8 @@ services: #動作させるアプリケーション単位
     tty: true
     #ホストの中でのファイルが、docker内のここに反映される。
     volumes:
-      - ./CR/CR1:/root/opt/home/sekigawa/CR/CR1
+      - ./CR/CR1:/app
+      - ./lib:/app/lib
       
     networks:
       defaultnetwork:
@@ -117,7 +120,8 @@ services: #動作させるアプリケーション単位
     tty: true
     #ホストの中でのファイルが、docker内のここに反映される。
     volumes:
-      - ./GatewayNode:/root/opt/home/sekigawa/GatewayNode
+      - ./GatewayNode:/app
+      - ./lib:/app/lib
       
     networks:
       defaultnetwork:
@@ -137,7 +141,8 @@ services: #動作させるアプリケーション単位
     tty: true
     #ホストの中でのファイルが、docker内のここに反映される。
     volumes:
-      - ./CR/CR2:/root/opt/home/sekigawa/CR/CR2
+      - ./CR/CR2:/app
+      - ./lib:/app/lib
       
     networks:
       defaultnetwork:
@@ -158,7 +163,8 @@ services: #動作させるアプリケーション単位
     tty: true
     #ホストの中でのファイルが、docker内のここに反映される。
     volumes:
-      - ./BCNode/BCNode1:/root/opt/home/sekigawa/BCNode/BCNode1
+      - ./BCNode/BCNode1:/app
+      - ./lib:/app/lib
     networks:
       defaultnetwork:
         ipv4_address: 10.200.0.7
@@ -177,7 +183,8 @@ services: #動作させるアプリケーション単位
     tty: true
     #ホストの中でのファイルが、docker内のここに反映される。
     volumes:
-      - ./BCNode/BCNode2:/root/opt/home/sekigawa/BCNode/BCNode2
+      - ./BCNode/BCNode2:/app
+      - ./lib:/app/lib
     networks:
       defaultnetwork:
         ipv4_address: 10.200.0.8
@@ -196,7 +203,8 @@ services: #動作させるアプリケーション単位
     tty: true
     #ホストの中でのファイルが、docker内のここに反映される。
     volumes:
-      - ./BCNode/BCNode3:/root/opt/home/sekigawa/BCNode/BCNode3
+      - ./BCNode/BCNode3:/app
+      - ./lib:/app/lib
       
     networks:
       defaultnetwork:

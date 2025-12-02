@@ -5,5 +5,3 @@ ENV USER=root
 COPY ./BCNode/BCNode2/cefnetd.fib /usr/local/cefore/cefnetd.fib
 # ENTRYPOINT 
 ENTRYPOINT ["/entrypoint.sh"]
-# 作業ディレクトリ
-WORKDIR /root/opt/home/sekigawa/BCNode/BCNode2
