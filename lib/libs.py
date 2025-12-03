@@ -24,7 +24,6 @@ class Cert:
         self.bcsig = bcsig
     
     def sign(self,sk):
-        print("Sign Cert with BCNode sk")
         cert_info ={
             "namespace":self.namespace,
             "pubkey" : self.pubkey,
@@ -48,7 +47,7 @@ class Cert:
     def to_json(self):
         return{
             "namespace":self.namespace,
-            "pubkey" : self.pubkey,
+            "pubkey" : self.pubkey.hex() if isinstance(self.pubkey, bytes) else self.pubkey,
             "keylocator": self.keylocator,
             "bcsig":self.bcsig.hex() if isinstance(self.bcsig, bytes) else self.bcsig
         }
@@ -61,7 +60,6 @@ class Content:
         self.signature = signature
     
     def sign(self,sk):
-        print("Sign Content with Content sk")
         content_info = {
             "data":self.data,
             "keylocator":self.keylocator
@@ -84,7 +82,7 @@ class Content:
         return{
             "data":self.data,
             "keylocator":self.keylocator,
-            "signature":self.signature.hex()
+            "signature":self.signature.hex() if isinstance(self.signature, bytes) else self.signature
         }
 
 ##-- Producer-BCNode間のモデル群 --##
@@ -96,7 +94,6 @@ class RegisterRequest:
         self.signature = signature
     
     def sign(self,sk):
-        print("Sign Register Request with Content sk")
         #署名対象データを作成。
         request_info = {
             "namespace":self.namespace,
@@ -203,7 +200,6 @@ class Block:
         return hashlib.sha256(block_info_string).hexdigest()
     
     def sign(self,sk):
-        print("Sign Block with BCNode sk")
         block_info = {
             "index": self.index,
             "timestamp": str(self.timestamp),

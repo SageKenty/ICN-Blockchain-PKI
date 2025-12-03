@@ -1,3 +1,7 @@
+# sys.pathにkentolibを追加
+import sys
+sys.path.append("./kentolib")
+# 引数処理
 import argparse
 #cefpyco(ネットワーク)のインポート
 import cefpyco

@@ -8,8 +8,8 @@ import cefpyco
 import json
 # タイムスタンプ,小待機用
 import time
-# os関連。モックデータ作成用にurandomを使用したいから。別用途にも利用する可能性あり
-import os
+# random(乱数生成ライブラリ)
+import random
 # シェル関連。
 import argparse
 
@@ -77,7 +77,7 @@ def main():
             #　名前空間情報
             namespace = "ccnx:/Content/" + str(register_count)
             #コンテンツデータ(1KBのバイト列を生成し、2KBのhexdigestにしてJSONで扱えるように。)
-            content_data = os.urandom(1024).hex()
+            content_data = random.randbytes(1024).hex()
             #Contentインスタンス生成
             content = Content(content_data)
 
