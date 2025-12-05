@@ -69,11 +69,6 @@ def main():
             print("Verifying Cert Signature...")
             cert_valid = cert.verify(bc_pk)
 
-            if cert_valid:
-                print("Cert Signature Valid")
-            else:
-                raise Exception("Cert Signature Invalid")
-
             #----コンテンツの検証----#
             # コンテンツの公開鍵を証明書から取得
             content_pk_hex = cert_json['pubkey']
@@ -83,14 +78,18 @@ def main():
 
             # コンテンツの署名を検証
             content_valid = content.verify(content_pk)
-    
-            if content_valid:
-                print("Content Signature Valid")
-            else:
-                raise Exception("Content Signature Invalid")
+
 
             if content_valid and cert_valid:
                 print("Content is perfectly valid and trusted!")
+            elif content_valid and not cert_valid:
+                print("Content is valid but Cert is NOT trusted!")
+                raise Exception("Cert Test Failed")
+            elif cert_valid and not content_valid:
+                print("Cert is valid but Content is NOT trusted!")
+                raise Exception("Content Test Failed")
+            else:
+                raise Exception("Both Content and Cert are NOT trusted!")
 
             request_count += 1
 
