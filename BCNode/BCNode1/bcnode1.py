@@ -1,4 +1,7 @@
 ###-----インポート-----##
+import sys
+sys.path.append("/kentolib")
+#cefpyco(ネットワーク)のインポート
 import cefpyco
 import cryptography
 from cryptography.hazmat.primitives.asymmetric import ed25519
@@ -12,12 +15,12 @@ import hashlib
 import time
 
 #関数構造のインポート(libs.pyから)
-from lib.libs import (receive_interest,datasend,send_block_and_receive_result,
+from libs import (receive_interest,datasend,send_block_and_receive_result,
                   verify_block,
                   bytes_to_json,signature_check,
                   get_key,keysend)
 # クラス構造のインポート
-from lib.libs import RegisterRequest,Transaction,Block,Cert
+from libs import RegisterRequest,Transaction,Block,Cert
 
 #ブロックチェーン
 blockchain = []

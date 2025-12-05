@@ -1,3 +1,7 @@
+###-----インポート-----##
+#パスのインポート
+import sys
+sys.path.append("/kentolib")
 # Cryptographyライブラリのインポート
 import cryptography
 from cryptography.hazmat.primitives.asymmetric import ed25519
@@ -9,9 +13,9 @@ import argparse
 
 
 ##　クラスのインポート　##
-from lib.libs import Content,Cert
+from libs import Content,Cert
 ##　関数のインポート　##
-from lib.libs import (request_and_receive,bytes_to_json)
+from libs import (request_and_receive,bytes_to_json)
 
 #---グローバル変数---#
 cert = None #証明書

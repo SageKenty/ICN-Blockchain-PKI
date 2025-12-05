@@ -59,7 +59,7 @@ services: #動作させるアプリケーション単位
     #ホストの中でのファイルが、docker内のここに反映される。
     volumes:
       - ./ProducerNode:/app
-      - ./lib:/app/lib
+      - ./kentolib:/kentolib
       
     networks:
       defaultnetwork:
@@ -80,7 +80,7 @@ services: #動作させるアプリケーション単位
     #ホストの中でのファイルが、docker内のここに反映される。
     volumes:
       - ./ClientNode:/app
-      - ./lib:/app/lib
+      - ./kentolib:/kentolib
       
     networks:
       defaultnetwork:
@@ -100,7 +100,7 @@ services: #動作させるアプリケーション単位
     #ホストの中でのファイルが、docker内のここに反映される。
     volumes:
       - ./CR/CR1:/app
-      - ./lib:/app/lib
+      - ./kentolib:/kentolib
       
     networks:
       defaultnetwork:
@@ -121,7 +121,7 @@ services: #動作させるアプリケーション単位
     #ホストの中でのファイルが、docker内のここに反映される。
     volumes:
       - ./GatewayNode:/app
-      - ./lib:/app/lib
+      - ./kentolib:/kentolib
       
     networks:
       defaultnetwork:
@@ -142,7 +142,7 @@ services: #動作させるアプリケーション単位
     #ホストの中でのファイルが、docker内のここに反映される。
     volumes:
       - ./CR/CR2:/app
-      - ./lib:/app/lib
+      - ./kentolib:/kentolib
       
     networks:
       defaultnetwork:
@@ -164,7 +164,7 @@ services: #動作させるアプリケーション単位
     #ホストの中でのファイルが、docker内のここに反映される。
     volumes:
       - ./BCNode/BCNode1:/app
-      - ./lib:/app/lib
+      - ./kentolib:/kentolib
     networks:
       defaultnetwork:
         ipv4_address: 10.200.0.7
@@ -184,7 +184,7 @@ services: #動作させるアプリケーション単位
     #ホストの中でのファイルが、docker内のここに反映される。
     volumes:
       - ./BCNode/BCNode2:/app
-      - ./lib:/app/lib
+      - ./kentolib:/kentolib
     networks:
       defaultnetwork:
         ipv4_address: 10.200.0.8
@@ -204,7 +204,7 @@ services: #動作させるアプリケーション単位
     #ホストの中でのファイルが、docker内のここに反映される。
     volumes:
       - ./BCNode/BCNode3:/app
-      - ./lib:/app/lib
+      - ./kentolib:/kentolib
       
     networks:
       defaultnetwork:
