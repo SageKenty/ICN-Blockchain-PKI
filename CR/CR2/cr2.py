@@ -1,6 +1,6 @@
 # sys.pathにkentolibを追加
 import sys
-sys.path.append("./kentolib")
+sys.path.append("/kentolib")
 # 引数処理
 import argparse
 #cefpyco(ネットワーク)のインポート
@@ -34,10 +34,10 @@ args = parser.parse_args()
 print(f"Forge mode: {args.forge}")
 
 # クラスのインポート
-from lib.libs import RegisterRequest,Block,Transaction
+from libs import RegisterRequest,Block,Transaction
 
 # 関数のインポート
-from lib.libs import (receive_interest,request_and_receive,
+from libs import (receive_interest,request_and_receive,
                       datasend,bytes_to_json)
 
 # ---データ構造--- #

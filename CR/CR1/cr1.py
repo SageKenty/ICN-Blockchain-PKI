@@ -1,5 +1,6 @@
+# パスのインポート　
 import sys
-sys.path.append("./kentolib")
+sys.path.append("/kentolib")
 
 import argparse
 #cefpyco(ネットワーク)のインポート
@@ -54,10 +55,10 @@ args = parser.parse_args()
 print(f"MITM mode: {args.mitm} : {mitm_mode[args.mitm]}")
 
 # クラスのインポート
-from lib.libs import Content,Cert
+from libs import Content,Cert
 
 # 関数のインポート
-from lib.libs import (receive_interest,request_and_receive,
+from libs import (receive_interest,request_and_receive,
                       datasend,bytes_to_json)
 
 #偽秘密鍵、偽公開鍵生成

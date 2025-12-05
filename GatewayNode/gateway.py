@@ -1,3 +1,7 @@
+# パスのインポート
+import sys
+sys.path.append("/kentolib")   
+# 引数処理
 import argparse
 #cefpyco(ネットワーク)のインポート
 import cefpyco
@@ -13,7 +17,7 @@ from cryptography.hazmat.primitives.asymmetric import ed25519
 from cryptography.hazmat.primitives import serialization
 
 # ---関数をインポート --- #
-from lib.libs import (receive_interest,request_and_receive,datasend)
+from libs import (receive_interest,request_and_receive,datasend)
 
 # ---引数処理--- #
 parser = argparse.ArgumentParser()
